@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello WomanController!{% endblock %}
+{% block stylesheets %} {{ parent() }} {% endblock %}
+
+
+{% block body %}
+    {% embed "frontEmbed/header.twig" %}
+        {% block imgUrl %} {{ imgUrl }} {% endblock %}
+    {% endembed %}
+
+    <section class="ampFeatures2 cid-s32acKsUxn" id="ampFeatures2-1o">
+
+
+
+        <div class="container">
+            <div class="title mbr-pb-4">
+                <h3 class="mbr-section-title mbr-pb-3 mbr-semibold mbr-white mbr-fonts-style display-1">Features</h3>
+
+            </div>
+            <div class="mbr-row">
+                <div class="card mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-6 md-pb">
+                    <div class="card-wrapper">
+
+                        <div class="card-box mbr-m-auto mbr-pt-3">
+                            <h3 class="card-title mbr-semibold mbr-white mbr-fonts-style display-5">Set
+                                Priorities Correctly</h3>
+
+                            <p class="card-text mbr-fonts-style mbr-white mbr-pt-2 display-7">Lorem ipsum dolor sit amet,
+                                consectetur adipiscing elit. Pellentesque sed mauris volutpat, porttitor tellus et,
+                                sagittis leo. Mauris mollis tempus risus, vitae pellentesque nibh aliquam in. Fusce euismod
+                                vestibulum enim, a gravida odio congue nec.</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-6 md-pb">
+                    <div class="card-wrapper">
+
+                        <div class="card-box mbr-m-auto mbr-pt-3">
+                            <h3 class="card-title mbr-semibold mbr-white mbr-fonts-style display-5">Сonsider All
+                                The Factors</h3>
+
+                            <p class="card-text mbr-white mbr-fonts-style mbr-pt-2 display-7">Lorem ipsum dolor sit amet,
+                                consectetur adipiscing elit. Pellentesque sed mauris volutpat, porttitor tellus et,
+                                sagittis leo. Mauris mollis tempus risus, vitae pellentesque nibh aliquam in. Fusce euismod
+                                vestibulum enim, a gravida odio congue nec. </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-6">
+                    <div class="card-wrapper">
+
+                        <div class="card-box mbr-m-auto mbr-pt-3">
+                            <h3 class="card-title mbr-white mbr-semibold mbr-fonts-style display-5">Use The Best
+                                Tools</h3>
+
+                            <p class="card-text mbr-white mbr-fonts-style mbr-pt-2 display-7">Lorem ipsum dolor sit amet,
+                                consectetur adipiscing elit. Pellentesque sed mauris volutpat, porttitor tellus et,
+                                sagittis leo. Mauris mollis tempus risus, vitae pellentesque nibh aliquam in. Fusce euismod
+                                vestibulum enim, a gravida odio congue nec. </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-6 last-child">
+                    <div class="card-wrapper">
+
+                        <div class="card-box mbr-m-auto mbr-pt-3">
+                            <h3 class="card-title mbr-semibold mbr-white mbr-fonts-style display-5">Analyze
+                                Competitors</h3>
+
+                            <p class="card-text mbr-white mbr-fonts-style mbr-pt-2 display-7">Lorem ipsum dolor sit amet,
+                                consectetur adipiscing elit. Pellentesque sed mauris volutpat, porttitor tellus et,
+                                sagittis leo. Mauris mollis tempus risus, vitae pellentesque nibh aliquam in. Fusce euismod
+                                vestibulum enim, a gravida odio congue nec. </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="mbr-col-md-12 mbr-col-lg-12 mbr-col-sm-12">
+
+                    <div class="card-btn mbr-pt-4 mbr-section-btn mbr-pt-2"><a class="btn btn-white-outline display-4" href="#">Read More</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% embed 'frontEmbed/about.twig' %}
+    {% endembed %}
+
+    {% embed "frontEmbed/talkingUs.twig" %}
+    {% endembed %}
+
+{% endblock %}

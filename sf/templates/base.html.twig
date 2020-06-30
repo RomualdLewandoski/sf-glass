@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <link rel="shortcut icon" href="assets/images/logo1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo1.png') }}" type="image/x-icon">
     <meta name="description" content="">
     <meta name="amp-script-src" content="">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="assets/css/style.css">
+
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     {% endblock %}
 </head>
 <body>
@@ -31,7 +32,6 @@
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     <script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>
     <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
-    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
     <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
