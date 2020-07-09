@@ -1,0 +1,54 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Liste des genres</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Produits</a></li>
+            <li><a href="#">Genres</a></li>
+            <li class="active">Liste</li>
+        </ol>
+    </section>
+
+    <div class="dashboard1">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="{{ path('gender_cat_new') }}" class="btn btn-sm btn-success">Create new</a>
+            </div>
+        </div>
+        <table class="table mt-4">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>HeaderBg</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for gender_cat in gender_cats %}
+                <tr>
+                    <td>{{ gender_cat.id }}</td>
+                    <td>{{ gender_cat.nom }}</td>
+                    <td>{{ gender_cat.headerBg }}</td>
+                    <td>{{ gender_cat.slug }}</td>
+                    <td>
+                        <a href="{{ path('gender_cat_show', {'id': gender_cat.id}) }}" class="btn btn-success btn-sm">show</a>
+                        <a href="{{ path('gender_cat_edit', {'id': gender_cat.id}) }}" class="btn btn-warning btn-sm">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

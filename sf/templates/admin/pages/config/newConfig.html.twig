@@ -1,0 +1,27 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Site
+            <small>Créer la configuration</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Gestion</a></li>
+            <li><a href="#">Configuration</a></li>
+            <li class="active">Ajouter</li>
+        </ol>
+    </section>
+    <div class="dashboard1">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="text-center">
+            <button class="btn btn-success btn-lg">{{ button_label|default('Save') }}</button>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

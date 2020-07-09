@@ -1,0 +1,53 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Liste des catégories</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Produits</a></li>
+            <li><a href="#">Catégorie</a></li>
+            <li class="active">Liste</li>
+        </ol>
+    </section>
+
+    <div class="dashboard1">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="{{ path('cat_product_new') }}" class="btn btn-sm btn-success">Create new</a>
+            </div>
+        </div>
+
+        <table class="table mt-4">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Placement</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cat_product in cat_products %}
+                <tr>
+                    <td>{{ cat_product.id }}</td>
+                    <td>{{ cat_product.name }}</td>
+                    <td>{{ cat_product.placement }}</td>
+                    <td>
+                        <a href="{{ path('cat_product_show', {'id': cat_product.id}) }}"class="btn btn-primary btn-sm">show</a>
+                        <a href="{{ path('cat_product_edit', {'id': cat_product.id}) }}"class="btn btn-warning btn-sm">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

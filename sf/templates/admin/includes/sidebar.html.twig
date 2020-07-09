@@ -1,0 +1,83 @@
+<aside class="main-sidebar">
+    <div class="nano">
+        <div class="nano-content">
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">GENERAL</li>
+                <li class="{% if currentPath == "admin" %} active {% endif %}">
+                    <a href="{{ path('admin') }}">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="header">GESTION SITE</li>
+                <li class="{% if currentPath == "site_config_new" or currentPath == "site_config_edit"  %} active {% endif %}">
+                    <a href="{{ path('site_config_show') }}">
+                        <i class="fa fa-cogs"></i> <span>Configuration</span>
+                    </a>
+
+                </li>
+                <li class="{% if currentPath == "image_index" %} active {% endif %}">
+                    <a href="{{ path('image_index') }}">
+                        <i class="fa fa-image"></i> <span>Gallerie</span>
+                    </a>
+
+                </li>
+
+                <li class="header">PRODUIT</li>
+                <li class="treeview {% if currentPath == "gender_cat_index" or currentPath == "gender_cat_new" or currentPath == "gender_cat_edit" or currentPath == "gender_cat_show" %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-venus-mars"></i>
+                        <span>Gestion genres</span>
+                        <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if currentPath == "gender_cat_index" %} active {% endif %}"><a
+                                    href="{{ path('gender_cat_index') }}"><i class="fa fa-circle-o"></i> Liste des
+                                genres</a></li>
+                        <li class="{% if currentPath == "gender_cat_new" %}active{% endif %}">
+                            <a href="{{ path('gender_cat_new') }}"><i class="fa fa-circle-o"></i> Ajouter un genre</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="treeview {% if currentPath == "cat_product_index" or currentPath == "cat_product_new" or currentPath == "cat_product_show" or currentPath=="cat_product_edit" %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-sort-amount-asc"></i>
+                        <span>Gestion categorie</span>
+                        <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if currentPath == "cat_product_index" %} active {% endif %}"><a
+                                    href="{{ path('cat_product_index') }}"><i class="fa fa-circle-o"></i> Liste des
+                                catégories</a></li>
+                        <li class="{% if currentPath == "cat_product_new" %}active{% endif %}"><a
+                                    href="{{ path('cat_product_new') }}"><i class="fa fa-circle-o"></i> Ajouter une
+                                catégorie</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview {% if currentPath == "product_new" or currentPath == "product_edit" or currentPath == "product_index" or currentPath == "product_show" %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Gestion Produits</span>
+                        <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if currentPath == "product_index" %}active{% endif %}"><a
+                                    href="{{ path('product_index') }}"><i class="fa fa-circle-o"></i> Liste des produits</a>
+                        </li>
+                        <li class="{% if currentPath == "product_new" %}active{% endif %}"><a
+                                    href="{{ path('product_new') }}"><i class="fa fa-circle-o"></i> Ajouter un
+                                produit</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</aside>

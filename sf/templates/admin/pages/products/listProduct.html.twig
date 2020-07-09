@@ -1,0 +1,66 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Liste des produits</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Produits</a></li>
+            <li class="active">Liste</li>
+        </ol>
+    </section>
+
+    <div class="dashboard1">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="{{ path('product_new') }}" class="btn btn-sm btn-success">Create new</a>
+            </div>
+        </div>
+
+        <table class="table mt-4">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Img</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>DateAjout</th>
+                <th>Stock</th>
+                <th>IsSponso</th>
+                <th>IsActive</th>
+                <th>Catégorie</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.img }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.dateAjout|date('d/m/Y') }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>{{ product.isSponso ? 'Yes' : 'No' }}</td>
+                    <td>{{ product.isActive ? 'Yes' : 'No' }}</td>
+                    <td>{{ product.cat.name }}</td>
+                    <td>
+                        <a href="{{ path('product_show', {'id': product.id}) }}"class="btn btn-primary btn-sm">show</a>
+                        <a href="{{ path('product_edit', {'id': product.id}) }}"class="btn btn-warning btn-sm">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

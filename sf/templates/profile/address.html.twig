@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-4">
+
+            <div class="mbr-col-lg-2 mbr-col-md-4 mbr-col-sm-12 md-pb">
+                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-pb-2 align-left display-4"><strong>Mon
+                        Profil</strong>
+                </h3>
+                <div class="item">
+
+                    <a href="{{ path('profile') }}"><p class="mbr-fonts-style mbr-text align-left display-4">Mes
+                            commandes</p></a>
+                </div>
+                <div class="item">
+
+                    <a href="{{ path('profile_address_list') }}"><p
+                                class="mbr-fonts-style mbr-text align-left display-4"><strong>Mes addresses</strong></p>
+                    </a>
+                </div>
+                <div class="item">
+
+                    <a href="{{ path('profile_informations') }}"><p
+                                class="mbr-fonts-style mbr-text align-left display-4">Mes informations</p>
+                    </a>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-8 pl-5">
+                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-pb-2 align-center display-4 mb-4"><strong>Mes
+                        Addresses</strong>
+                </h3>
+                <table class="table">
+                    <thead>
+                    <th>Nom</th>
+                    <th>Addresse</th>
+                    <th>zipCode</th>
+                    <th>Ville</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody>
+
+
+                    {% for addr in addresses %}
+                        <tr>
+                            <td>{{ addr.nom }}</td>
+                            <td>{{ addr.address }}</td>
+                            <td>{{ addr.zipCode }}</td>
+                            <td>{{ addr.city }}</td>
+                            <td class="mbr-row ">
+                                <a href="{{ path('profile_address_edit', {'id': addr.id}) }}"
+                                   class="btn btn-black btn-sm">Editer</a>
+                                <form method="post" class="m-auto"
+                                      action="{{ path('profile_address_delete', {'id': addr.id}) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ addr.id) }}">
+                                    <button class="btn btn-sm ">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4"> Vous ne nous avez pas communiqué votre adresse
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br><br>
+                <a href="{{ path('profile_address_add') }}" class="btn btn-primary">Ajouter une addresse</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

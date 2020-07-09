@@ -1,0 +1,53 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+<section class="content-header">
+    <h1>
+        Gestion Produit
+        <small>Lecture du genre</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li><a href="#">Produits</a></li>
+        <li><a href="#">Genres</a></li>
+        <li class="active">Lecture</li>
+    </ol>
+</section>
+<div class="dashboard1">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gender_cat.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ gender_cat.nom }}</td>
+            </tr>
+            <tr>
+                <th>HeaderBg</th>
+                <td>{{ gender_cat.headerBg }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ gender_cat.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-md-6 text-right">
+            <a href="{{ path('gender_cat_edit', {'id': gender_cat.id}) }}" class="btn btn-warning btn-lg">edit</a>
+        </div>
+        <div class="col-md-6">
+            <form method="post" action="{{ path('gender_cat_delete', {'id': gender_cat.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gender_cat.id) }}">
+                <button class="btn btn-lg btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+    <a href="{{ path('gender_cat_index') }}"><i class="fa fa-arrow-left"></i> back to list</a>
+
+
+</div>
+{% endblock %}

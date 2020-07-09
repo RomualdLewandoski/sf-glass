@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\AuthAuthenticator;
+use Swift_Mailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,47 +30,56 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AuthAuthenticator $authenticator): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AuthAuthenticator $authenticator, UserRepository $userrepo): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+        $error = null;
         if ($form->isSubmitted() && $form->isValid()) {
+            $getByEmail = $userrepo->findBy(['email' => $form->get('email')->getData()]);
+            $getByuserName = $userrepo->findBy(['username' => $form->get('username')->getData()]);
+            if ($getByEmail == null && $getByuserName == null) {
+                // encode the plain password
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+                $user->setRoles(["ROLE_ADMIN"]);
 
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $transport = (new \Swift_SmtpTransport('moonly.fr', 25))
+                    ->setUsername("admin@moonly.fr")
+                    ->setPassword("Afpagroupe6");
+                $message = (new \Swift_Message('Hello Email'))
+                    ->setFrom('admin@moonly.fr')
+                    ->setTo($user->getEmail())
+                    ->setBody("Salut bienvenue sur mon super site avec symfo");
+                $mailer = new Swift_Mailer($transport);
+
+                $mailer->send($message);
+
+                return $guardHandler->authenticateUserAndHandleSuccess(
                     $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            $user->setRoles(["ROLE_ADMIN"]);
+                    $request,
+                    $authenticator,
+                    'main' // firewall name in security.yaml
+                );
+            } else {
+                $error = "Email or username already defined";
+            }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // generate a signed url and email it to the user
-            /*$this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('test@localhost.fr', 'register'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );*/
-            // do anything else you need here, like send an email
-
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'error' => $error
+
         ]);
     }
 

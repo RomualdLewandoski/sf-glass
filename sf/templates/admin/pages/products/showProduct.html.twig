@@ -1,0 +1,81 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Lecture du produit</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Produits</a></li>
+            <li class="active">Lecture</li>
+        </ol>
+    </section>
+    <div class="dashboard1 mt-2">
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Img</th>
+                <td>{{ product.img }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>DateAjout</th>
+                <td>{{ product.dateAjout }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ product.stock }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ product.cat.name }}</td>
+            </tr>
+            <tr>
+                <th>IsSponso</th>
+                <td>{{ product.isSponso ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ product.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-6 text-right">
+                <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-warning btn-lg">edit</a>
+            </div>
+            <div class="col-md-6">
+                <form method="post" action="{{ path('product_delete', {'id': product.id}) }}"
+                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                    <button class="btn btn-lg btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+
+
+        <a href="{{ path('product_index') }}"><i class="fa fa-arrow-left"></i> back to list</a>
+    </div>
+
+{% endblock %}

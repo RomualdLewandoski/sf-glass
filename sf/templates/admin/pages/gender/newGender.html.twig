@@ -1,0 +1,27 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Ajouter un genre</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Produits</a></li>
+            <li><a href="#">Genres</a></li>
+            <li class="active">Ajouter</li>
+        </ol>
+    </section>
+    <div class="dashboard1">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="text-center">
+            <button class="btn btn-lg btn-success">{{ button_label|default('Save') }}</button>
+
+        </div> {{ form_end(form) }}
+
+
+        <a href="{{ path('gender_cat_index') }}"><i class="fa fa-arrow-left"></i> back to list</a>
+    </div>
+{% endblock %}

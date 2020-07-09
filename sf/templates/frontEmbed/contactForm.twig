@@ -13,7 +13,7 @@
 
 
 
-                <!--Formbuilder Form-->
+                <!--Formbuilder Form->
                 <form method="POST" class="mbr-form" action-xhr="https://formoid.net/api/amp-form/push" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="7pvecEC03Vl+iE4OgQhJAcIKUvNYgbOybompFz5FUt3dVJFrkL+iG/xWutYm3nUCmEi/c4T1pNdb2AAoQ8xvTPYYbZ4xYaU1nPta8EIdnJ+Y4Tg20XU3s+66FlGtbrNh.G2Kid/KefslhAU0N2UdYn90LIQRTfVa0AjTyWXz86bWEg6Xl4Y/o7kjTXS9C7ZEP560NTnn8j/doIZNHJa6LgqlruO85KB+iQaFXyH185Q4Y6spTW2FPPRLr2XFr3x5Y">
                     <div class="mbr-row">
                         <div submit-success="" class="mbr-col-lg-12 mbr-col-md-12 mbr-col-sm-12">
@@ -42,11 +42,14 @@
                         </div>
                         <div class="mbr-col-auto"><button type="submit" class="btn btn-black display-7">Send</button></div>
                     </div>
-                    <span class="gdpr-block">
-<label>
-<span class="textGDPR" style="color: #a7a7a7"><input type="checkbox" name="gdpr" id="gdpr-form01-a" required="">By continuing you agree to our <a style="color: #767676; text-decoration: none;" href="terms.html">Terms of Service</a> and <a style="color: #767676; text-decoration: none;" href="policy.html">Privacy Policy</a>.</span>
-</label>
-</span></form>
+                    -->
+                {{ form_start(contactForm) }}
+                {{ form_widget(contactForm) }}
+                <div class="text-center">
+                    <button class="btn btn-black display-7">{{ button_label|default('Send') }}</button>
+                </div>
+                {{ form_end(contactForm) }}
+
                 <!--Formbuilder Form-->
             </div>
 

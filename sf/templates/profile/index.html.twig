@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-4">
+
+            <div class="mbr-col-lg-2 mbr-col-md-4 mbr-col-sm-12 md-pb">
+                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-pb-2 align-left display-4"><strong>Mon
+                        Profil</strong>
+                </h3>
+                <div class="item">
+
+                    <a href="{{ path('profile') }}"><p class="mbr-fonts-style mbr-text align-left display-4"><strong>Mes
+                                commandes</strong></p></a>
+                </div>
+                <div class="item">
+
+                    <a href="{{ path('profile_address_list') }}"><p
+                                class="mbr-fonts-style mbr-text align-left display-4">Mes addresses</p></a>
+                </div>
+                <div class="item">
+
+                    <a href="{{ path('profile_informations') }}"><p
+                                class="mbr-fonts-style mbr-text align-left display-4">Mes informations</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-8 pl-5">
+                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-pb-2 align-center display-4 mb-4"><strong>Mes
+                        Commandes</strong>
+                </h3> Vous n'avez aucune commande actuellement
+            </div>
+        </div>
+    </div>
+{% endblock %}

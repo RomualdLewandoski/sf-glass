@@ -4,6 +4,9 @@
 
 {% block body %}
     <div class="container">
+        {% if error != null %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
@@ -11,17 +14,36 @@
         <h1 class="display-5 display-6 mb-3  font-weight-normal">Register</h1>
 
         {{ form_start(registrationForm) }}
-        <div class="form-group">
-            {{ form_row(registrationForm.username, {'attr': {'class':'form-control'}}) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_row(registrationForm.nom) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.prenom) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.telFixe) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_row(registrationForm.telMobile) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.username) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.email) }}
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            {{ form_row(registrationForm.email, {'attr': {'class':'form-control'}}) }}
-        </div>
+
         <div class="form-group">
 
             {{ form_row(registrationForm.plainPassword, {
                 label: 'Password'
-                ,'attr': {'class':'form-control'}}) }}
+                }) }}
         </div>
         <div class="form-group">
 
