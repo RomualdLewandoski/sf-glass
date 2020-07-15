@@ -6,6 +6,7 @@ use App\Entity\GenderCat;
 use App\Entity\Product;
 use App\Form\GenderCatType;
 use App\Repository\GenderCatRepository;
+use App\Repository\ImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class GenderCatController extends AbstractController
     /**
      * @Route("/admin/gender/new", name="gender_cat_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ImageRepository $imageRepository): Response
     {
         $genderCat = new GenderCat();
         $form = $this->createForm(GenderCatType::class, $genderCat);
@@ -43,6 +44,7 @@ class GenderCatController extends AbstractController
 
         return $this->render('admin/pages/gender/newGender.html.twig', [
             'gender_cat' => $genderCat,
+            'images' => $imageRepository->findAll(),
             'form' => $form->createView(),
         ]);
     }
@@ -60,7 +62,7 @@ class GenderCatController extends AbstractController
     /**
      * @Route("/admin/gender/{id}/edit", name="gender_cat_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, GenderCat $genderCat): Response
+    public function edit(Request $request, GenderCat $genderCat, ImageRepository $imageRepository): Response
     {
         $form = $this->createForm(GenderCatType::class, $genderCat);
         $form->handleRequest($request);
@@ -73,6 +75,8 @@ class GenderCatController extends AbstractController
 
         return $this->render('admin/pages/gender/editGender.html.twig', [
             'gender_cat' => $genderCat,
+            'images' => $imageRepository->findAll(),
+
             'form' => $form->createView(),
         ]);
     }
@@ -82,7 +86,7 @@ class GenderCatController extends AbstractController
      */
     public function delete(Request $request, GenderCat $genderCat): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$genderCat->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $genderCat->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($genderCat);
             $entityManager->flush();

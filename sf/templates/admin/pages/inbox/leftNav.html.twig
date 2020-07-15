@@ -1,0 +1,23 @@
+<div class="cardbg mt-4 pb-0">
+    <h6 class="title-inner text-uppercase">Folders</h6>
+    <div class="box-body no-padding">
+        <ul class="nav nav-pills flex-column">
+            <li class="active nav-item">
+                <a href="{{ path('inbox') }}" class="nav-link"><i class="fa fa-inbox"></i> Boite de
+                    réception
+                    {% if unread > 0 %}
+                        <span class="tag tag-pill badge-primary float-right">{{ unread }}</span>
+                    {% endif %}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('inbox_sent') }}" class="nav-link"><i class="fa fa-envelope-o"></i> Envoyés</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ path('inbox_trash') }}" class="nav-link"><i class="fa fa-trash-o"></i> Poubelle</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.box-body -->
+</div>

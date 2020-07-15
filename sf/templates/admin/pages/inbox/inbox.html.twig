@@ -1,0 +1,164 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <link rel="stylesheet" href="{{ asset('assets/css/mailbox/inbox.css') }}">
+
+    <section class="content inbox">
+        <div class="row">
+            <div class="col-lg-3">
+                {% if currentPath == "inbox_trash" %}
+                    <div class="row">
+                        <a href="{{ path('inbox_restore_all') }}"
+                           class="btn btn-success btn-lg ml-4"><i
+                                    class="fa fa-trash-o"></i> Tout restaurer
+                        </a>
+                        <a href="{{ path('inbox_delete_all') }}"
+                           class="btn btn-danger btn-lg ml-2"><i
+                                    class="fa fa-trash-o"></i> Tous effacer
+                        </a>
+                    </div>
+                {% endif %}
+                {% embed "admin/pages/inbox/leftNav.html.twig" %}
+                {% endembed %}
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-lg-9">
+                <div class="cardbg">
+                    <div class="heading">
+                        <h6 class="title-inner text-uppercase">{{ title }}</h6>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control form-control-sm" placeholder="Search Mail">
+                                <i class="fa fa-search form-control-feedback"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="mailbox-controls">
+                            <!-- /.btn-group -->
+                            {% set totalEntry = contacts.getTotalItemCount %}
+                            {% set currentPage = contacts.getCurrentPageNumber %}
+                            {% set maxEntry = contacts.getPaginationData["numItemsPerPage"] %}
+                            {% if currentPage == 1 %}
+                                {% set startDisplay = 1 %}
+                                {% set endDisplay = startDisplay + contacts.getItems|length - 1 %}
+                            {% else %}
+                                {% set startDisplay =  (maxEntry )*(currentPage-1) + 1 %}
+                                {% set endDisplay = startDisplay + contacts.getItems|length -1 %}
+                            {% endif %}
+                            <div class="float-right">
+                                {% if contacts.getItems|length == 0 %}
+                                0
+                                {% else %}
+                                {{ startDisplay }}
+                                {% endif %}
+                                - {{ endDisplay }}
+                                / {{ contacts.getTotalItemCount }}
+
+                                <!-- /.btn-group -->
+                            </div>
+                            <!-- /.float-right -->
+                        </div>
+                        <div class="table-responsive mailbox-messages mt-4">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                {% for contact in contacts %}
+                                    <tr url="{{ path('inbox_read', {'id': contact.id}) }}">
+                                        <td>
+                                            {% if contact.reply == null %}
+                                                {% if contact.isRead %}
+                                                    <i class="fa fa-envelope-open-o"></i>
+                                                {% else %}
+                                                    <i class="fa fa-envelope-o"></i>
+                                                {% endif %}
+                                            {% else %}
+                                                <i class="fa fa-mail-reply-all"></i>
+                                            {% endif %}
+
+                                        </td>
+                                        <td class="mailbox-star"><a href="{{ path('inbox_star', {'id': contact.id}) }}">
+
+                                                {% if contact.isStar %}
+                                                    <i class="fa fa-star text-warning"></i>
+                                                {% else %}
+                                                    <i class="fa fa-star-o text-yellow"></i>
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td class="mailbox-name"><a
+                                                    href="{{ path('inbox_read', {'id': contact.id}) }}">{{ contact.fullName }}</a>
+                                        </td>
+                                        <td class="mailbox-subject">{{ contact.subject }}
+                                        </td>
+                                        <td
+                                                class="mailbox-attachment"></td>
+                                        <td class="mailbox-date">{{ contact.sendAt|date("d/m/Y - H:i") }}</td>
+                                        <td>
+                                            {% if currentPath == "inbox" %}
+                                                {% if contact.reply == null %}
+                                                    <a href="{{ path('inbox_reply', {'id': contact.id}) }}"
+                                                       class="btn btn-success btn-sm"><i
+                                                                class="fa fa-reply"></i>
+                                                    </a>
+                                                {% endif %}
+
+                                                <a href="{{ path('inbox_delete', {'id': contact.id}) }}"
+                                                   class="btn btn-danger btn-sm ml-2"><i
+                                                            class="fa fa-trash-o"></i>
+                                                </a>
+                                            {% elseif currentPath == "inbox_sent" %}
+                                                <a href="{{ path('inbox_delete', {'id': contact.id}) }}"
+                                                   class="btn btn-danger btn-sm ml-2"><i
+                                                            class="fa fa-trash-o"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('inbox_delete', {'id': contact.id}) }}"
+                                                   class="btn btn-success btn-sm ml-2"><i
+                                                            class="fa fa-undo"></i>
+                                                </a>
+                                                <a href="{{ path('inbox_remove', {'id': contact.id}) }}"
+                                                   class="btn btn-danger btn-sm ml-2"><i
+                                                            class="fa fa-trash-o"></i>
+                                                </a>
+                                            {% endif %}
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <div class="row mt-3">
+                            <div class="offset-md-4 col-md-4">
+                            {{ knp_pagination_render(contacts) }}
+                            </div>
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <script>
+        $('body').on('mousedown', 'tr[url]', function (e) {
+            var click = e.which;
+            var url = $(this).attr('url');
+            if (url) {
+                if (click == 2 || (click == 1 && (e.ctrlKey || e.metaKey))) {
+                    window.open(url, '_blank');
+                    window.focus();
+                } else if (click == 1) {
+                    window.location.href = url;
+                }
+                return true;
+            }
+        });
+    </script>
+{% endblock %}

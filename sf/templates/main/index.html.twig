@@ -7,7 +7,16 @@
 
 
     {% embed "frontEmbed/header.twig" %}
-        {% block imgUrl %} {{ imgUrl }} {% endblock %}
+        {% block headerTitle %}
+                {{ mainConfig.headerTitle }}
+        {% endblock %}
+        {% block headerSub %}
+                {{ mainConfig.headerSub }}
+        {% endblock %}
+
+        {% block imgUrl %}
+                {{ vich_uploader_asset(mainConfig.headerBg, 'imageFile') }}
+        {% endblock %}
     {% endembed %}
 
     {% embed "frontEmbed/about.twig" %}
@@ -18,7 +27,7 @@
         <div class="container-fluid mbr-white">
             <div class="mbr-row">
                 <div class="mbr-col-lg-6 mbr-col-md-6  mbr-m-auto mbr-col-sm-12" style="position: relative;
-                        background-image: url('{{ bgWoman }}');
+                        background-image: url('{{ vich_uploader_asset(mainConfig.gender1Bg, "imageFile") }}');
                         background-size: cover;
                         background-position: center;
                         ">
@@ -27,10 +36,10 @@
 
 
                         <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-2">
-                            <strong>Women</strong></h1>
+                            <strong>{{ mainConfig.gender1Title }}</strong></h1>
 
                         <div class="mbr-section-btn mbr-pt-5 align-left"><a
-                                    class="btn btn-md btn-white-outline display-4" href="#"><span
+                                    class="btn btn-md btn-white-outline display-4" href="{{ path('view_gender', {"slug":mainConfig.gender1slug}) }}"><span
                                         class="mobi-mbri mobi-mbri-right mbr-iconfont mbr-iconfont-btn"><svg
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                             width="19" height="19"><path
@@ -40,7 +49,7 @@
                     </div>
                 </div>
                 <div class="mbr-col-lg-6 mbr-col-md-6 mbr-m-auto mbr-col-sm-12" style="position: relative;
-                        background-image: url('{{ bgMan }}');
+                        background-image: url('{{ vich_uploader_asset(mainConfig.gender2Bg, "imageFile") }}');
                         background-size: cover;
                         background-position: center;
                         ">
@@ -48,11 +57,11 @@
                     <div class="content">
 
 
-                        <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-2"><strong>Men</strong>
-                        </h1>
+                        <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-2">
+                            <strong>{{ mainConfig.gender2Title }}</strong></h1>
 
                         <div class="mbr-section-btn mbr-pt-5 align-left"><a
-                                    class="btn btn-md btn-white-outline display-4" href="#"><span
+                                    class="btn btn-md btn-white-outline display-4" href="{{ path('view_gender', {"slug":mainConfig.gender2slug}) }}"><span
                                         class="mobi-mbri mobi-mbri-right mbr-iconfont mbr-iconfont-btn"><svg
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                             width="19" height="19"><path
@@ -69,51 +78,6 @@
     {% embed 'frontEmbed/care.twig' %}
     {% endembed %}
 
-    <section class="content6 cid-s0bsm6ACwt" id="content06-4">
-
-
-        <div class="container">
-            <div class="mbr-row">
-                <div class="mbr-col-lg-6 mbr-col-md-12 img-col mbr-m-auto md-pb mbr-col-sm-12">
-                    <div class="img-wrapper">
-                        <amp-img src="{{ bgWoman }}" alt="" width="651.8163265306123" height="779" layout="responsive"
-                                 class="mobirise-loader mbr-m-auto align-center">
-                            <div placeholder="" class="placeholder">
-                                <div class="mobirise-spinner">
-                                    <em></em>
-                                    <em></em>
-                                    <em></em>
-                                </div>
-                            </div>
-
-                        </amp-img>
-                    </div>
-                </div>
-                <div class="mbr-col-lg-6 mbr-col-md-12 mbr-col-sm-12">
-                    <div class="content">
-
-
-                        <p class="mbr-fonts-style mbr-text align-left mbr-pb-5  display-7">Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Curabitur faucibus lorem sit amet fringilla lobortis. Cras nisl
-                            tellus, convallis a tristique sed, efficitur in ipsum. Aliquam elementum, arcu eu tincidunt
-                            molestie, urna lorem convallis elit, et vulputate nunc ligula nec leo. Proin placerat id
-                            lorem
-                            eu lobortis. Mauris molestie nibh eget neque varius posuere. Mauris porttitor aliquet nibh.
-                            Morbi at vulputate lacus, vel laoreet erat.
-                            <br>
-                            <br>Vestibulum viverra lacus ut ante consequat dictum. Cras lacinia est in libero tristique,
-                            nec
-                            fermentum est dapibus. Pellentesque id mauris lacinia, pellentesque augue ac, fringilla dui.
-                            Maecenas eu felis enim. Vestibulum eu pretium mauris, quis commodo nunc. Etiam risus turpis,
-                            dignissim quis eros malesuada, ullamcorper sollicitudin purus. Fusce eu blandit ligula. Nam
-                            erat
-                            nunc, pharetra nec feugiat vel, efficitur ut dui.<br></p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="info1 cid-s0bsn70ibR" id="info01-5">
 
@@ -138,7 +102,9 @@
     {% embed "frontEmbed/promoProduct.twig" %}
     {% endembed %}
 
-    <section class="features2 cid-s0bsJ2zwJy" id="features02-b">
+    <section class="features2 cid-s0bsJ2zwJy" id="features02-b" style="
+            background-image: url('{{ vich_uploader_asset(siteConfig.howWorksBg, "imageFile") }}');
+">
 
         <div class="mbr-overlay"></div>
         <div class="container mbr-white">
@@ -146,11 +112,7 @@
                 <div class="mbr-col-lg-6 mbr-col-md-12 mbr-col-sm-12">
                     <h3 class="mbr-section-title mbr-fonts-style align-left mbr-pb-4 display-5">How it Works</h3>
                     <div class="mbr-text counter-container mbr-fonts-style mbr-pb-1 display-7">
-                        <ol>
-                            <li class="">Free shipping and easy returns for orders over $250</li>
-                            <li class="">Intuitive designs made with quality materials</li>
-                            <li class="">Customer service you can trust</li>
-                        </ol>
+                        {{ siteConfig.howWorks|raw }}
                     </div>
                 </div>
             </div>
@@ -158,7 +120,6 @@
     </section>
 
     <section class="features3 mbr-section cid-s0bt3IU31C" id="features03-d">
-
 
 
         <div class="container">
@@ -172,13 +133,15 @@
                 <div class="card md-pb mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-4">
                     <div class="card-wrapper">
                         <div class="card-img">
-                            <amp-img src="assets/images/01.jpg" layout="responsive" width="718.0851063829788" height="600" alt="" class="mobirise-loader">
+                            <amp-img src="assets/images/01.jpg" layout="responsive" width="718.0851063829788"
+                                     height="600" alt="" class="mobirise-loader">
                                 <div placeholder="" class="placeholder">
                                     <div class="mobirise-spinner">
                                         <em></em>
                                         <em></em>
                                         <em></em>
-                                    </div></div>
+                                    </div>
+                                </div>
 
                             </amp-img>
                         </div>
@@ -193,13 +156,15 @@
                 <div class="card md-pb mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-4">
                     <div class="card-wrapper">
                         <div class="card-img">
-                            <amp-img src="assets/images/03.jpg" layout="responsive" width="453.6170212765957" height="600" alt="" class="mobirise-loader">
+                            <amp-img src="assets/images/03.jpg" layout="responsive" width="453.6170212765957"
+                                     height="600" alt="" class="mobirise-loader">
                                 <div placeholder="" class="placeholder">
                                     <div class="mobirise-spinner">
                                         <em></em>
                                         <em></em>
                                         <em></em>
-                                    </div></div>
+                                    </div>
+                                </div>
 
                             </amp-img>
                         </div>
@@ -214,13 +179,15 @@
                 <div class="card md-pb mbr-col-sm-12 mbr-col-md-6 mbr-col-lg-4 last-child">
                     <div class="card-wrapper">
                         <div class="card-img">
-                            <amp-img src="assets/images/04.jpg" layout="responsive" width="390.9836065573771" height="600" alt="" class="mobirise-loader">
+                            <amp-img src="assets/images/04.jpg" layout="responsive" width="390.9836065573771"
+                                     height="600" alt="" class="mobirise-loader">
                                 <div placeholder="" class="placeholder">
                                     <div class="mobirise-spinner">
                                         <em></em>
                                         <em></em>
                                         <em></em>
-                                    </div></div>
+                                    </div>
+                                </div>
 
                             </amp-img>
                         </div>
@@ -246,13 +213,15 @@
 
                 <div class="mbr-col-lg-7 mbr-col-md-12  mbr-m-auto mbr-col-sm-12 md-pb">
                     <div class="img-wrapper">
-                        <amp-img src="assets/images/02.jpg" alt="" width="766" height="766" layout="responsive" class="mobirise-loader mbr-m-auto align-center">
+                        <amp-img src="assets/images/02.jpg" alt="" width="766" height="766" layout="responsive"
+                                 class="mobirise-loader mbr-m-auto align-center">
                             <div placeholder="" class="placeholder">
                                 <div class="mobirise-spinner">
                                     <em></em>
                                     <em></em>
                                     <em></em>
-                                </div></div>
+                                </div>
+                            </div>
 
                         </amp-img>
                     </div>
@@ -262,11 +231,19 @@
                 <div class="mbr-col-lg-5 mbr-col-md-12 mbr-m-auto mbr-col-sm-12">
                     <div class="content">
 
-                        <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-2">Your Everyday Sunglasses</h1>
+                        <h1 class="mbr-section-title mbr-fonts-style align-left mbr-pb-2 display-2">Your Everyday
+                            Sunglasses</h1>
                         <p class="mbr-fonts-style mbr-text align-left mbr-pb-5  display-7">Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Nunc commodo ligula eget ex accumsan, in ultricies tellus vehicula
+                            consectetur adipiscing elit. Nunc commodo ligula eget ex accumsan, in ultricies tellus
+                            vehicula
                         </p>
-                        <div class="mbr-section-btn align-left"><a class="btn btn-md btn-warning-outline display-4" href="#"><span class="mobi-mbri mobi-mbri-right mbr-iconfont mbr-iconfont-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="19" height="19"><path d="M24 11l-6.7 6.7-1.4-1.4 4.3-4.3H0v-2h20.2l-4.3-4.3 1.4-1.4L24 11z"></path></svg></span>Shop Now</a>
+                        <div class="mbr-section-btn align-left"><a class="btn btn-md btn-warning-outline display-4"
+                                                                   href="#"><span
+                                        class="mobi-mbri mobi-mbri-right mbr-iconfont mbr-iconfont-btn"><svg
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            width="19" height="19"><path
+                                                d="M24 11l-6.7 6.7-1.4-1.4 4.3-4.3H0v-2h20.2l-4.3-4.3 1.4-1.4L24 11z"></path></svg></span>Shop
+                                Now</a>
                         </div>
                     </div>
                 </div>

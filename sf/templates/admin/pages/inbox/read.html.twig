@@ -1,0 +1,77 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <link rel="stylesheet" href="{{ asset('assets/css/mailbox/readmail.css') }}">
+    <section class="content readmail">
+        <div class="row">
+            <div class="col-lg-3"><a href="{{ path('inbox_reply', {'id': contact.id}) }}"
+                                     class="btn btn-success btn-block margin-bottom">Répondre</a>
+                {% embed "admin/pages/inbox/leftNav.html.twig" %}
+                {% endembed %}
+            </div>
+            <!-- /.col -->
+            <div class="col-lg-9">
+                <div class="cardbg">
+                    <div class="heading">
+                        <h6 class="title-inner text-uppercase">Lecture du mail</h6>
+                        <div class="box-tools pull-right">
+                            <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
+                               data-original-title="Previous">
+                                <i class="fa fa-chevron-left"></i>
+                            </a>
+                            <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title=""
+                               data-original-title="Next">
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="mailbox-read-info">
+                                <h3>{{ contact.subject }}</h3>
+                                <h5>De: {{ contact.email }}
+                                    <span class="mailbox-read-time pull-right">{{ contact.sendAt|date('d/m/Y à H:i') }}</span>
+                                </h5>
+                            </div>
+                            <!-- /.mailbox-read-info -->
+
+
+                            <div class="mailbox-read-info">
+                                {{ contact.comment|raw }}
+                            </div>
+                            {% if contact.reply != null %}
+                                <div class="mailbox-read-message mt-2">
+                                    <h6>Réponse le {{ contact.replyAt|date('d/m/Y à H:i') }} :</h6>
+                                    {{ contact.reply|raw }}
+                                </div>
+                            {% endif %}
+                            <!-- /.mailbox-read-message -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+
+                        </div>
+                        <!-- /.box-footer -->
+                        <div class="box-footer">
+                            <div class="pull-right">
+                                {% if contact.reply == null %}
+                                    <a href="{{ path('inbox_reply', {"id":contact.id}) }}" class="btn btn-success"><i
+                                                class="fa fa-reply"></i> Répondre</a>
+                                {% endif %}
+                                <a href="{{ path('inbox_delete', {'id': contact.id}) }}" class="btn btn-danger"><i
+                                            class="fa fa-trash-o"></i> Supprimer
+                                </a>
+                            </div>
+
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /. box -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+{% endblock %}
+

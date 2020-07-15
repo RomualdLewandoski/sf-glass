@@ -28,44 +28,29 @@ class SiteConfig
     private $careAndTips;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="siteConfigs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $howWorksBg;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $howWorks;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $howWorksBg;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $headerBg;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $headerTitle;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $headerSubtile;
-
-    /**
      * @ORM\Column(type="text")
      */
-    private $seeenOnPress;
+    private $seenOnPress;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $mapsUrl;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $aboutUs;
+
+
+
 
     public function getId(): ?int
     {
@@ -96,6 +81,18 @@ class SiteConfig
         return $this;
     }
 
+    public function getHowWorksBg(): ?Image
+    {
+        return $this->howWorksBg;
+    }
+
+    public function setHowWorksBg(?Image $howWorksBg): self
+    {
+        $this->howWorksBg = $howWorksBg;
+
+        return $this;
+    }
+
     public function getHowWorks(): ?string
     {
         return $this->howWorks;
@@ -108,62 +105,14 @@ class SiteConfig
         return $this;
     }
 
-    public function getHowWorksBg(): ?string
+    public function getSeenOnPress(): ?string
     {
-        return $this->howWorksBg;
+        return $this->seenOnPress;
     }
 
-    public function setHowWorksBg(string $howWorksBg): self
+    public function setSeenOnPress(string $seenOnPress): self
     {
-        $this->howWorksBg = $howWorksBg;
-
-        return $this;
-    }
-
-    public function getHeaderBg(): ?string
-    {
-        return $this->headerBg;
-    }
-
-    public function setHeaderBg(string $headerBg): self
-    {
-        $this->headerBg = $headerBg;
-
-        return $this;
-    }
-
-    public function getHeaderTitle(): ?string
-    {
-        return $this->headerTitle;
-    }
-
-    public function setHeaderTitle(string $headerTitle): self
-    {
-        $this->headerTitle = $headerTitle;
-
-        return $this;
-    }
-
-    public function getHeaderSubtile(): ?string
-    {
-        return $this->headerSubtile;
-    }
-
-    public function setHeaderSubtile(string $headerSubtile): self
-    {
-        $this->headerSubtile = $headerSubtile;
-
-        return $this;
-    }
-
-    public function getSeeenOnPress(): ?string
-    {
-        return $this->seeenOnPress;
-    }
-
-    public function setSeeenOnPress(string $seeenOnPress): self
-    {
-        $this->seeenOnPress = $seeenOnPress;
+        $this->seenOnPress = $seenOnPress;
 
         return $this;
     }
@@ -180,15 +129,5 @@ class SiteConfig
         return $this;
     }
 
-    public function getAboutUs(): ?string
-    {
-        return $this->aboutUs;
-    }
 
-    public function setAboutUs(string $aboutUs): self
-    {
-        $this->aboutUs = $aboutUs;
-
-        return $this;
-    }
 }

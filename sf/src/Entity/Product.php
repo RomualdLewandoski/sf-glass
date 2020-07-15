@@ -22,10 +22,6 @@ class Product
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $img;
 
     /**
      * @ORM\Column(type="float")
@@ -62,6 +58,17 @@ class Product
      */
     private $isSponso;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GenderCat::class, inversedBy="products")
+     */
+    private $gender;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,17 +86,6 @@ class Product
         return $this;
     }
 
-    public function getImg(): ?string
-    {
-        return $this->img;
-    }
-
-    public function setImg(string $img): self
-    {
-        $this->img = $img;
-
-        return $this;
-    }
 
     public function getPrice(): ?float
     {
@@ -171,6 +167,30 @@ class Product
     public function setIsSponso(bool $isSponso): self
     {
         $this->isSponso = $isSponso;
+
+        return $this;
+    }
+
+    public function getGender(): ?GenderCat
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?GenderCat $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

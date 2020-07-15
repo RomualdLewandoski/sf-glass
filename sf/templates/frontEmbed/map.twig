@@ -6,14 +6,30 @@
             <div class="map-title mbr-col-sm-12 mbr-col-md-12 align-center">
 
             </div>
-            <div class="google-map"><amp-iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAEIpgj38KyLFELm2bK9Y7krBkz1K-cMq8&amp;q=place_id:ChIJn6wOs6lZwokRLKy1iqRcoKw" height="400" layout="fill" sandbox="allow-scripts allow-same-origin                                 allow-popups" frameborder="0" class="mobirise-loader">
-                    <div placeholder="" class="placeholder">
+
+            <div class="google-map">
+                <amp-iframe
+                        {{ siteConfig.mapsUrl|raw }}
+                        height="400" layout="fill"
+                        sandbox="allow-scripts allow-same-origin                                 allow-popups"
+                        frameborder="0"
+                        class="mobirise-loader i-amphtml-element i-amphtml-layout-fill i-amphtml-layout-size-defined i-amphtml-layout"
+                        i-amphtml-layout="fill" style="--loader-delay-offset:114ms !important;">
+                    <div placeholder="" class="placeholder amp-hidden">
                         <div class="mobirise-spinner">
                             <em></em>
                             <em></em>
                             <em></em>
-                        </div></div>
-                </amp-iframe></div>
+                        </div>
+                    </div>
+                    <i-amphtml-scroll-container class="amp-active">
+                        <iframe class="i-amphtml-fill-content" name="amp_iframe0" frameborder="0" allow=""
+                                sandbox="allow-scripts allow-same-origin                                 allow-popups"
+                                {{ siteConfig.mapsUrl|raw }}
+                                style="z-index: 0;"></iframe>
+                    </i-amphtml-scroll-container>
+                </amp-iframe>
+            </div>
 
         </div>
     </div>

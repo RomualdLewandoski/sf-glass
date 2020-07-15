@@ -15,6 +15,8 @@ class WomanController extends AbstractController
         return $this->render('woman/index.html.twig', [
             'imgUrl' => 'assets/images/01.jpg',
             'bgMan' => 'assets/images/background2.jpg',
+            'genderCat'  => [],
+            'sponsoProducts' => [],
             'bgWoman' => 'assets/images/background1.jpg'
         ]);
     }

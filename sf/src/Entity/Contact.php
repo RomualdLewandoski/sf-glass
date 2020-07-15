@@ -52,6 +52,21 @@ class Contact
      */
     private $isTrash;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isStar;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $sendAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $replyAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +152,42 @@ class Contact
     public function setIsTrash(bool $isTrash): self
     {
         $this->isTrash = $isTrash;
+
+        return $this;
+    }
+
+    public function getIsStar(): ?bool
+    {
+        return $this->isStar;
+    }
+
+    public function setIsStar(bool $isStar): self
+    {
+        $this->isStar = $isStar;
+
+        return $this;
+    }
+
+    public function getSendAt(): ?\DateTimeInterface
+    {
+        return $this->sendAt;
+    }
+
+    public function setSendAt(?\DateTimeInterface $sendAt): self
+    {
+        $this->sendAt = $sendAt;
+
+        return $this;
+    }
+
+    public function getReplyAt(): ?\DateTimeInterface
+    {
+        return $this->replyAt;
+    }
+
+    public function setReplyAt(?\DateTimeInterface $replyAt): self
+    {
+        $this->replyAt = $replyAt;
 
         return $this;
     }

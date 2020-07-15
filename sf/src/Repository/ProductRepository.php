@@ -19,6 +19,49 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function getSponsoAllGenre()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.isSponso = :val')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('val', true)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getSponsoByGender($gender)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.isSponso = :val')
+            ->andWhere('p.gender = :gender')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('val', true)
+            ->setParameter('gender', $gender)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getLatest(){
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('val', true)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getLatestGender($gender){
+        return $this->createQueryBuilder('p')
+            ->where('p.gender = :val')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('val', $gender)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

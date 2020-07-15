@@ -1,0 +1,52 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <link rel="stylesheet" href="{{ asset('assets/css/mailbox/compose.css') }}">
+    <section class="content compose">
+        <div class="row">
+            <div class="col-lg-3">
+                {% embed "admin/pages/inbox/leftNav.html.twig" %}
+                {% endembed %}
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="box box-primary cardbg">
+                    <div class="heading mb-4">
+                        <h6 class="title-inner text-uppercase">Répondre au message</h6>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="A: {{ contact.email }} ({{ contact.fullName}} )" disabled>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Sujet: {{ contact.subject }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <div id="compose-textarea" class="form-control" style="max-height: 250px; overflow-y: auto" >
+                                {{ contact.comment|raw }}
+                            </div>
+                        </div>
+                        {{ form_start(replyForm) }}
+                        <div class="form-group">
+                        {{ form_widget(replyForm) }}
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                        </div>
+                        {{ form_end(replyForm)}}
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+{% endblock %}
+

@@ -9223,5 +9223,13 @@ a.text-dark:hover {
     }
 }
 
+.modal-xl {
+    max-width: 95%!important;
+}
+
+.media-sidebar{
+    background: #f3f3f3;
+}
+
 
 /*# sourceMappingURL=bootstrap.min.css.map */

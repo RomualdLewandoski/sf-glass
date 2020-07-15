@@ -35,7 +35,7 @@
                 <tr>
                     <td>{{ gender_cat.id }}</td>
                     <td>{{ gender_cat.nom }}</td>
-                    <td>{{ gender_cat.headerBg }}</td>
+                    <td>{{ gender_cat.headerBg.name }}</td>
                     <td>{{ gender_cat.slug }}</td>
                     <td>
                         <a href="{{ path('gender_cat_show', {'id': gender_cat.id}) }}" class="btn btn-success btn-sm">show</a>

@@ -24,10 +24,6 @@ class GenderCat
      */
     private $nom;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $headerBg;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,9 +35,20 @@ class GenderCat
      */
     private $catProducts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="gender")
+     */
+    private $products;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Image::class, inversedBy="genderCats")
+     */
+    private $headerBg;
+
     public function __construct()
     {
         $this->catProducts = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,17 +68,6 @@ class GenderCat
         return $this;
     }
 
-    public function getHeaderBg(): ?string
-    {
-        return $this->headerBg;
-    }
-
-    public function setHeaderBg(string $headerBg): self
-    {
-        $this->headerBg = $headerBg;
-
-        return $this;
-    }
 
     public function getSlug(): ?string
     {
@@ -93,26 +89,47 @@ class GenderCat
         return $this->catProducts;
     }
 
-    public function addCatProduct(CatProduct $catProduct): self
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
     {
-        if (!$this->catProducts->contains($catProduct)) {
-            $this->catProducts[] = $catProduct;
-            $catProduct->setGender($this);
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setGender($this);
         }
 
         return $this;
     }
 
-    public function removeCatProduct(CatProduct $catProduct): self
+    public function removeProduct(Product $product): self
     {
-        if ($this->catProducts->contains($catProduct)) {
-            $this->catProducts->removeElement($catProduct);
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
             // set the owning side to null (unless already changed)
-            if ($catProduct->getGender() === $this) {
-                $catProduct->setGender(null);
+            if ($product->getGender() === $this) {
+                $product->setGender(null);
             }
         }
 
         return $this;
     }
+
+    public function getHeaderBg(): ?Image
+    {
+        return $this->headerBg;
+    }
+
+    public function setHeaderBg(?Image $headerBg): self
+    {
+        $this->headerBg = $headerBg;
+
+        return $this;
+    }
+
 }

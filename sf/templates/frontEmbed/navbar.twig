@@ -23,12 +23,13 @@
             <li class="nav-item"><a class="nav-link link  text-black display-4" href="contact.html" aria-expanded="false">Contacts</a></li>
             <li class="nav-item"><a class="nav-link link  text-black display-4" href="help.html" aria-expanded="false">Help</a></li></ul>
          NAVBAR ITEMS END -->
-        <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-                <a class="nav-link link text-black display-4" href="{{ path('women') }}">Women</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link link text-black display-4" href="{{ path('men') }}">Men</a>
-            </li>
+        <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+            {% for gender in genderCat %}
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="{{ path('view_gender', {'slug': gender.slug }) }}">{{ gender.nom }}</a>
+                </li>
+            {% endfor %}
+
             <li class="nav-item dropdown">
                 <a class="nav-link link  dropdown-toggle text-black display-4" data-toggle="dropdown-submenu" aria-expanded="false">Explore</a>
                 <div class="dropdown-menu">
@@ -93,12 +94,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <!-- NAVBAR ITEMS -->
-                <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-                        <a class="nav-link link text-black display-4" href="{{ path('women') }}">Women</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link text-black display-4" href="{{ path('men') }}">Men</a>
-                    </li>
+                <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                    {% for gender in genderCat %}
+                        <li class="nav-item">
+                            <a class="nav-link link text-black display-4" href="{{ path('view_gender', {'slug': gender.slug }) }}">{{ gender.nom }}</a>
+                        </li>
+                    {% endfor %}
+
                     <li class="nav-item dropdown">
                         <a class="nav-link link  dropdown-toggle text-black display-4" data-toggle="dropdown-submenu" aria-expanded="false">Explore</a>
                         <div class="dropdown-menu">

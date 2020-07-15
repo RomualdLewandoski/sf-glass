@@ -27,4 +27,115 @@
         <a href="{{ path('product_index') }}"><i class="fa fa-arrow-left"></i> back to list</a>
 
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade h100" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl h-75" role="document">
+            <div class="modal-content h-100">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle">Ajouter un média</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body h-100 py-0">
+                    <div class="row h-100">
+                        <div class="col-md-10">
+                            <div class="row p-3 el-element-overlay">
+                                <div class="row" style="max-height: 700px; overflow-y: auto">
+                                    {% for image in images %}
+                                        <div class="col-md-3">
+                                            <div class="card">
+                                                <div class="el-card-item">
+                                                    <div class="el-card-avatar el-overlay-1">
+                                                        <span class="notify-badge" style="display: none"
+                                                              data-localsrc="{{ image.imageName }}"><i
+                                                                    class="fa fa-check"></i></span>
+                                                        <img
+                                                                src="{{ vich_uploader_asset(image, 'imageFile') }}"
+                                                                alt="user" class="show" data-name="{{ image.name }}"
+                                                                data-localsrc="{{ image.imageName }}"
+                                                                data-id="{{ image.id }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">no records found</td>
+                                        </tr>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 h-100 p-3 media-sidebar" id="imgInfo">
+                            <div class="attachment-info">
+                                <div class="thumbnail thumbnail-image">
+                                    <img src="" draggable="false" alt="" id="imgThumb">
+                                </div>
+                            </div>
+                            Nom de l'image : <span id="imgName"></span><br>
+                            Taille de l'image : <span id="imgWidth"></span>x<span id="imgHeight"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="insertImg">Insérer l'image</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            $('document').ready(function () {
+                //fix option
+                $('#product_image option').css('display', 'none');
+                //end fix option
+                var imgId = false;
+                $('#product_image').click(function (e) {
+                    $('#exampleModalCenter').modal('toggle')
+                    //fix option
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                    //end fix option
+                })
+                $('.show').click(function () {
+                    let img = $(this)
+                    let imgSrc = img.attr('src')
+                    let imgName = img.attr('data-name')
+                    let imgLocalSrc = img.attr('data-localsrc')
+                    imgId = img.attr('data-id')
+                    $('.notify-badge').each(function () {
+                        let elem = $(this);
+                        if (elem.is(":visible")) {
+                            elem.hide();
+                        }
+                        if (elem.attr('data-localsrc') == imgLocalSrc) {
+                            elem.show();
+                        }
+                    })
+
+                    var newImg = new Image();
+                    newImg.src = imgSrc;
+                    var height = newImg.height;
+                    var width = newImg.width;
+                    $('#imgName').text(imgName)
+                    $('#imgWidth').text(width)
+                    $('#imgHeight').text(height)
+                    $('#imgThumb').attr('src', imgSrc)
+
+                })
+                $('#insertImg').click(function(e){
+                    e.preventDefault();
+                    if (!imgId){
+                        alert("Vous devez selectionner une image")
+                    }else{
+                       $('#product_image').val(imgId)
+                        $('#exampleModalCenter').modal('toggle')
+                    }
+                })
+            })
+        </script>
+    </div>
 {% endblock %}

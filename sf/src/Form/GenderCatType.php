@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\GenderCat;
+use App\Entity\Image;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +15,12 @@ class GenderCatType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('headerBg')
+            ->add('headerBg', EntityType::class, array(
+                'class' => Image::class,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'required' => true,
+            ))
             ->add('slug')
         ;
     }

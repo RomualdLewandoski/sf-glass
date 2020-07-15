@@ -16,12 +16,7 @@ class CatProductType extends AbstractType
         $builder
             ->add('name')
             ->add('placement')
-            ->add('gender', EntityType::class, array(
-                'class' => GenderCat::class,
-                'choice_label' => 'nom',
-                'multiple' => false,
-                'required' => true
-            ))
+
         ;
     }
 

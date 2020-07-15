@@ -8,13 +8,39 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="header">GESTION SITE</li>
-                <li class="{% if currentPath == "site_config_new" or currentPath == "site_config_edit"  %} active {% endif %}">
-                    <a href="{{ path('site_config_show') }}">
-                        <i class="fa fa-cogs"></i> <span>Configuration</span>
+                <li class="header">MESSAGERIE</li>
+                <li class="{% if currentPath == "inbox" or currentPath == "inbox_read" or currentPath == "inbox_reply" or currentPath == "inbox_sent" or currentPath == "inbox_trash" %} active {% endif %}">
+                    <a href="{{ path('inbox') }}">
+                        <i class="fa fa-envelope"></i> <span>Boite de réception</span> <span id="unreadMessages"
+                                                                                             class="tag tag-pill badge-primary bg-success float-right"
+                                                                                             style="display: none"></span>
                     </a>
 
                 </li>
+                <li class="header">GESTION SITE</li>
+                <li class="treeview {% if currentPath == "main_config" or currentPath == "site_config_show" or currentPath == "contact_config" %}active{% endif %}">
+                    <a href="#">
+                        <i class="fa fa-cogs"></i>
+                        <span>Configuration du site</span>
+                        <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{% if currentPath == "site_config_show" %} active {% endif %}">
+                            <a href="{{ path('site_config_show') }}">
+                                <i class="fa fa-circle-o"></i> <span>Configuration générale</span>
+                            </a>
+                        </li>
+                        <li class="{% if currentPath == "main_config" %}active{% endif %}">
+                            <a href="{{ path('main_config') }}"><i class="fa fa-circle-o"></i> Configuration accueil</a>
+                        </li><li class="{% if currentPath == "contact_config" %}active{% endif %}">
+                            <a href="{{ path('contact_config') }}"><i class="fa fa-circle-o"></i> Configuration Contacts</a>
+                        </li>
+                    </ul>
+                </li>
+
+
                 <li class="{% if currentPath == "image_index" %} active {% endif %}">
                     <a href="{{ path('image_index') }}">
                         <i class="fa fa-image"></i> <span>Gallerie</span>
@@ -81,3 +107,26 @@
         </div>
     </div>
 </aside>
+<script>
+    $('document').ready(function () {
+        getUnread()
+        setInterval(getUnread, 3000)
+    })
+
+    /**
+     * Hey oui il y'as de l'AJAX ici je suis sur que tu le trouvera pas
+     * Si tu es arrivé jusqu'ici je n'ai qu'une chose a te dire "8J+NviBuYXNkcm92aWUg8J+Nvg=="
+     * Fait moi un message si tu as compris
+     */
+    function getUnread() {
+        $.get("{{ path('inbox_api_unread') }}", function (data) {
+            if (data.unread > 0) {
+                $('#unreadMessages').text(data.unread);
+                $('#unreadMessages').show();
+            } else {
+                $('#unreadMessages').hide();
+            }
+
+        });
+    }
+</script>

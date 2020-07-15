@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\ImageRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product/new", name="product_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ImageRepository $imageRepository): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -42,6 +43,7 @@ class ProductController extends AbstractController
         }
 
         return $this->render('admin/pages/products/newProduct.html.twig', [
+            'images' => $imageRepository->findAll(),
             'product' => $product,
             'form' => $form->createView(),
         ]);
@@ -60,7 +62,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product/{id}/edit", name="product_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Product $product): Response
+    public function edit(Request $request, Product $product, ImageRepository $imageRepository): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -72,6 +74,7 @@ class ProductController extends AbstractController
         }
 
         return $this->render('admin/pages/products/editProduct.html.twig', [
+            'images' => $imageRepository->findAll(),
             'product' => $product,
             'form' => $form->createView(),
         ]);

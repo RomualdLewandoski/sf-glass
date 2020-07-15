@@ -26,7 +26,13 @@
             </tr>
             <tr>
                 <th>HeaderBg</th>
-                <td>{{ gender_cat.headerBg }}</td>
+                <td>
+                    <div class="attachment-info border-0">
+                        <div class="thumbnail thumbnail-image">
+                            <img src="{{ vich_uploader_asset(gender_cat.headerBg, 'imageFile') }}" draggable="false" alt="{{ gender_cat.headerBg.name }}" id="imgThumb">
+                        </div>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <th>Slug</th>

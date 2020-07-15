@@ -20,6 +20,8 @@
                 <a href="{{ path('product_new') }}" class="btn btn-sm btn-success">Create new</a>
             </div>
         </div>
+        <div class="col-md-12 table-responsive">
+
 
         <table class="table mt-4">
             <thead>
@@ -34,6 +36,7 @@
                 <th>IsSponso</th>
                 <th>IsActive</th>
                 <th>Catégorie</th>
+                <th>Genre</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -42,14 +45,15 @@
                 <tr>
                     <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.img }}</td>
+                    <td>{{ product.image.name }}</td>
                     <td>{{ product.price }}</td>
-                    <td>{{ product.description }}</td>
+                    <td>{{ product.description|slice(0, 35) }}...</td>
                     <td>{{ product.dateAjout|date('d/m/Y') }}</td>
                     <td>{{ product.stock }}</td>
                     <td>{{ product.isSponso ? 'Yes' : 'No' }}</td>
                     <td>{{ product.isActive ? 'Yes' : 'No' }}</td>
                     <td>{{ product.cat.name }}</td>
+                    <td>{{ product.gender.nom }}</td>
                     <td>
                         <a href="{{ path('product_show', {'id': product.id}) }}"class="btn btn-primary btn-sm">show</a>
                         <a href="{{ path('product_edit', {'id': product.id}) }}"class="btn btn-warning btn-sm">edit</a>
@@ -62,5 +66,7 @@
             {% endfor %}
             </tbody>
         </table>
+
+        </div>
     </div>
 {% endblock %}

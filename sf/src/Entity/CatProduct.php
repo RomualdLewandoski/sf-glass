@@ -34,11 +34,6 @@ class CatProduct
      */
     private $products;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=GenderCat::class, inversedBy="catProducts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $gender;
 
     public function __construct()
     {
@@ -105,15 +100,4 @@ class CatProduct
         return $this;
     }
 
-    public function getGender(): ?GenderCat
-    {
-        return $this->gender;
-    }
-
-    public function setGender(?GenderCat $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
 }

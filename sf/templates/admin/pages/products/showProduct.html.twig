@@ -27,23 +27,33 @@
             </tr>
             <tr>
                 <th>Img</th>
-                <td>{{ product.img }}</td>
+                <td>
+                    <div class="attachment-info border-0">
+                        <div class="thumbnail thumbnail-image">
+                            <img src="{{ vich_uploader_asset(product.image, 'imageFile') }}" draggable="false" alt="{{ product.image.name }}" id="imgThumb">
+                        </div>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price }}€</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ product.description }}</td>
+                <td>{{ product.description|raw }}</td>
             </tr>
             <tr>
                 <th>DateAjout</th>
-                <td>{{ product.dateAjout }}</td>
+                <td>{{ product.dateAjout|date("d/m/Y à H:i") }}</td>
             </tr>
             <tr>
                 <th>Stock</th>
                 <td>{{ product.stock }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ product.gender.nom }}</td>
             </tr>
             <tr>
                 <th>Catégorie</th>

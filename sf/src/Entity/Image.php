@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ImageRepository;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -53,6 +55,40 @@ class Image
      * @var \DateTimeInterface|null
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="image")
+     */
+    private $products;
+
+    /**
+     * @ORM\OneToMany(targetEntity=GenderCat::class, mappedBy="headerBg")
+     */
+    private $genderCats;
+
+    /**
+     * @ORM\OneToMany(targetEntity=MainConfig::class, mappedBy="headerBg")
+     */
+    private $mainConfigs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SiteConfig::class, mappedBy="howWorksBg")
+     */
+    private $siteConfigs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Partners::class, mappedBy="logo")
+     */
+    private $partners;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+        $this->genderCats = new ArrayCollection();
+        $this->mainConfigs = new ArrayCollection();
+        $this->siteConfigs = new ArrayCollection();
+        $this->partners = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -114,6 +150,161 @@ class Image
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getImage() === $this) {
+                $product->setImage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|GenderCat[]
+     */
+    public function getGenderCats(): Collection
+    {
+        return $this->genderCats;
+    }
+
+    public function addGenderCat(GenderCat $genderCat): self
+    {
+        if (!$this->genderCats->contains($genderCat)) {
+            $this->genderCats[] = $genderCat;
+            $genderCat->setHeaderBg($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGenderCat(GenderCat $genderCat): self
+    {
+        if ($this->genderCats->contains($genderCat)) {
+            $this->genderCats->removeElement($genderCat);
+            // set the owning side to null (unless already changed)
+            if ($genderCat->getHeaderBg() === $this) {
+                $genderCat->setHeaderBg(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MainConfig[]
+     */
+    public function getMainConfigs(): Collection
+    {
+        return $this->mainConfigs;
+    }
+
+    public function addMainConfig(MainConfig $mainConfig): self
+    {
+        if (!$this->mainConfigs->contains($mainConfig)) {
+            $this->mainConfigs[] = $mainConfig;
+            $mainConfig->setHeaderBg($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMainConfig(MainConfig $mainConfig): self
+    {
+        if ($this->mainConfigs->contains($mainConfig)) {
+            $this->mainConfigs->removeElement($mainConfig);
+            // set the owning side to null (unless already changed)
+            if ($mainConfig->getHeaderBg() === $this) {
+                $mainConfig->setHeaderBg(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SiteConfig[]
+     */
+    public function getSiteConfigs(): Collection
+    {
+        return $this->siteConfigs;
+    }
+
+    public function addSiteConfig(SiteConfig $siteConfig): self
+    {
+        if (!$this->siteConfigs->contains($siteConfig)) {
+            $this->siteConfigs[] = $siteConfig;
+            $siteConfig->setHowWorksBg($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSiteConfig(SiteConfig $siteConfig): self
+    {
+        if ($this->siteConfigs->contains($siteConfig)) {
+            $this->siteConfigs->removeElement($siteConfig);
+            // set the owning side to null (unless already changed)
+            if ($siteConfig->getHowWorksBg() === $this) {
+                $siteConfig->setHowWorksBg(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Partners[]
+     */
+    public function getPartners(): Collection
+    {
+        return $this->partners;
+    }
+
+    public function addPartner(Partners $partner): self
+    {
+        if (!$this->partners->contains($partner)) {
+            $this->partners[] = $partner;
+            $partner->setLogo($this);
+        }
+
+        return $this;
+    }
+
+    public function removePartner(Partners $partner): self
+    {
+        if ($this->partners->contains($partner)) {
+            $this->partners->removeElement($partner);
+            // set the owning side to null (unless already changed)
+            if ($partner->getLogo() === $this) {
+                $partner->setLogo(null);
+            }
+        }
+
+        return $this;
     }
 
 }

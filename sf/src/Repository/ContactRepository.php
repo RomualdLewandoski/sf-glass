@@ -19,6 +19,47 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
+
+
+    public function getUnread()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.isRead = :val')
+            ->setParameter('val', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getReply()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.reply IS NOT NULL')
+            ->andWhere('c.isTrash = :trash')
+            ->setParameter('trash', false)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getMessages()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isTrash = :val')
+            ->setParameter('val', false)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTrash()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isTrash = :val')
+            ->setParameter('val', true)
+            ->getQuery()
+            ->getResult();
+
+    }
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */

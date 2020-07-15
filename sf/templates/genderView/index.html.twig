@@ -6,7 +6,7 @@
 
 {% block body %}
     {% embed "frontEmbed/header.twig" %}
-        {% block imgUrl %} {{ imgUrl }} {% endblock %}
+        {% block imgUrl %}  {{ vich_uploader_asset(headerBg, 'imageFile') }} {% endblock %}
     {% endembed %}
 
     {% embed "frontEmbed/about.twig" %}
