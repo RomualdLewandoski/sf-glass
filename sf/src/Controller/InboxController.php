@@ -178,7 +178,6 @@ class InboxController extends AbstractController
      */
     public function reply(Request $request, int $id, ContactRepository $contactRepo)
     {
-
         $contact = $contactRepo->find($id);
         if ($contact == null) {
             return $this->redirectToRoute("inbox");

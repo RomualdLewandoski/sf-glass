@@ -81,6 +81,11 @@ class Image
      */
     private $partners;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Features::class, mappedBy="img")
+     */
+    private $features;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -88,6 +93,7 @@ class Image
         $this->mainConfigs = new ArrayCollection();
         $this->siteConfigs = new ArrayCollection();
         $this->partners = new ArrayCollection();
+        $this->features = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -301,6 +307,37 @@ class Image
             // set the owning side to null (unless already changed)
             if ($partner->getLogo() === $this) {
                 $partner->setLogo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Features[]
+     */
+    public function getFeatures(): Collection
+    {
+        return $this->features;
+    }
+
+    public function addFeature(Features $feature): self
+    {
+        if (!$this->features->contains($feature)) {
+            $this->features[] = $feature;
+            $feature->setImg($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeature(Features $feature): self
+    {
+        if ($this->features->contains($feature)) {
+            $this->features->removeElement($feature);
+            // set the owning side to null (unless already changed)
+            if ($feature->getImg() === $this) {
+                $feature->setImg(null);
             }
         }
 

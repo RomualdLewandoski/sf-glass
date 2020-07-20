@@ -8,10 +8,40 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/logo1.png') }}" type="image/x-icon">
     <meta name="description" content="">
     <meta name="amp-script-src" content="">
+    <script src="{{ asset('assets/js/jquery/slim.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
 
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        <style>
+            @font-face {
+                font-family: 'Material Icons';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v7/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2) format('woff2'), url(https://fonts.gstatic.com/s/materialicons/v7/2fcrYFNaTjcS6g4U3t-Y5RV6cRhDpPC5P4GCEJpqGoc.woff) format('woff');
+            }
+
+            .material-icons {
+                font-family: 'Material Icons';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 24px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                word-wrap: normal;
+                -moz-font-feature-settings: 'liga';
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            i {
+                cursor: pointer;
+            }
+        </style>
+        <link rel="stylesheet" href="{{ asset('assets/css/fonts/fonts-style.css') }}">
+
     {% endblock %}
 </head>
 <body>
@@ -39,6 +69,9 @@
 
     <script async custom-element="amp-user-notification"
             src="https://cdn.ampproject.org/v0/amp-user-notification-0.1.js"></script>
+
+    <script src="{{ asset('assets/js/jquery.star.rating.js') }}"></script>
+
 {% endblock %}
 </body>
 </html>

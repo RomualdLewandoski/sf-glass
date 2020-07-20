@@ -6,7 +6,16 @@
 
 {% block body %}
     {% embed "frontEmbed/header.twig" %}
-        {% block imgUrl %} {{ imgUrl }} {% endblock %}
+        {% block headerTitle %}
+            {{ mainConfig.headerTitle }}
+        {% endblock %}
+        {% block headerSub %}
+            {{ mainConfig.headerSub }}
+        {% endblock %}
+
+        {% block imgUrl %}
+            {{ vich_uploader_asset(mainConfig.headerBg, 'imageFile') }}
+        {% endblock %}
     {% endembed %}
 
     <section class="ampFeatures2 cid-s32acKsUxn" id="ampFeatures2-1o">

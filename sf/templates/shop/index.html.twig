@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="cat-scroller mt-3 mb-3">
+        <div class="container-2">
+            <ul>
+                {% for Pcat in productCats %}
+                    <li class="
+                    {% if Pcat.id == catId %}
+                    cat-scroller__current
+                    {% endif %}
+">
+                        <a href="{{ path('shop', {'id':Pcat.id}) }}" title="{{ Pcat.name }}">{{ Pcat.name }}</a>
+                    </li>
+                {% endfor %}
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="shop-page-title category-page-title page-title ">
+
+        <div class="container shop-container mbr-flex justify-content-between">
+            <div class="align-left">
+                <h1 class="display-5">
+                    {{ cat.name }}
+                </h1><br>
+            </div><!-- .flex-left -->
+
+            <div class="align-right">
+
+                <p class="woocommerce-result-count mb-2">
+                    Voici les {{ products|length }} résultat(s)</p>
+                    <form class="woocommerce-ordering mbr-row" method="get">
+                        <div class="mbr-col-md-4">
+                            <select name="gender" class="">
+                                <option value="all" {% if filterGender == "all" %} selected="selected" {% endif %}>Tous</option>
+                                {% for gender in genderCat %}
+                                <option value="{{gender.id}}" {% if filterGender == gender.id %} selected="selected" {% endif %}>{{ gender.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mbr-col-md-5">
+                            <select name="orderby" class="orderby" aria-label="Shop order">
+                                <option value="menu_order"  {% if filterOrder == "menu_order" %} selected="selected" {% endif %}>Tri par défaut</option>
+                                <option value="rating"  {% if filterOrder == "rating" %} selected="selected" {% endif %}>Tri par notes moyennes</option>
+                                <option value="date"  {% if filterOrder == "date" %} selected="selected" {% endif %}>Trier du plus récent au plus ancien</option>
+                                <option value="price"  {% if filterOrder == "price" %} selected="selected" {% endif %}>Tri par tarif croissant</option>
+                                <option value="price-desc"  {% if filterOrder == "price-desc" %} selected="selected" {% endif %}>Tri par tarif décroissant</option>
+                            </select>
+                        </div>
+                        <div class="mbr-col-md-3">
+                            <button class="btn btn-sm mt-2" type="submit">Filtrer</button>
+                        </div>
+
+                    </form>
+
+            </div><!-- .flex-right -->
+
+        </div><!-- flex-row -->
+    </div>
+
+    <div class="container">
+        <div class="row category-page-row ">
+            <div class="col large-12">
+                <div class="shop-container">
+                    <div class="mbr-row">
+                        {% for product in products %}
+                            <div class="mbr-col-md-3 mt-3">
+                                <div class="col-inner">
+                                    <div class="product-small box ">
+                                        <div class="box-image">
+                                            <div class="image-fade_in_back">
+                                                <a href="{{ path('shop_view', {'id':product.id}) }}">
+                                                    <img class="shop-thumbnail"
+                                                         src="{{ vich_uploader_asset(product.image, 'imageFile') }}"
+                                                    > </a>
+                                            </div>
+
+                                            {% if product.stock == 0 %}
+                                                <div class="out-of-stock-label">Rupture de stock</div>
+                                            {% endif %}
+                                        </div><!-- box-image -->
+
+                                        <div class="box-text box-text-products text-center grid-style-2">
+                                            <div class="title-wrapper"><p class="name product-title"><a
+                                                            href="{{ path('shop_view', {'id':product.id}) }}">{{ product.name }}</a>
+                                                </p></div>
+                                            <div class="price-wrapper">
+                                                <div class="star-rating{{ product.id }}" role="img" aria-label="{{ product.notes|round(2, 'floor') }}" title="{{ product.notes|round(2, 'floor') }}/5 pour {{ product.ratings|length }} votes"></div>
+                                                <script>
+                                                    $(document).ready(function(){
+                                                        $('.star-rating{{ product.id }}').showStatic({{ product.notes|round }});
+                                                    })
+                                                </script>
+                                                <span class="price"><span
+                                                            class="woocommerce-Price-amount amount">{{ product.price }}<span
+                                                                class="woocommerce-Price-currencySymbol">€</span></span><span
+                                                            class="price-suffix"></span></span>
+                                            </div>
+                                            <div class="add-to-cart-button">
+                                                <a
+                                                        href="{{ path('shop_view', {'id':product.id}) }}"
+                                                        class="btn btn-pink btn-xs">Lire
+                                                    la suite</a>
+                                            </div>
+                                        </div><!-- box-text -->
+                                    </div><!-- box -->
+
+                                </div><!-- .col-inner -->
+                            </div><!-- col -->
+                        {% endfor %}
+
+
+                    </div><!-- row -->
+                </div>
+            </div><!-- shop container -->
+        </div><!-- col-fit  -->
+
+    </div>
+
+
+{% endblock %}

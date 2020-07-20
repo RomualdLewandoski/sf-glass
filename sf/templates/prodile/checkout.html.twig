@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container shop-container">
+        <div class="text-center display-5 mt-3">
+            Détails de la commande
+        </div>
+        <form method="post" action="{{ path('complete_checkout') }}" class="woocommerce-ordering">
+            <div class="mbr-row">
+                {% set sousTotal = 0 %}
+                {% for cart in carts %}
+                    {% set productTotal = cart.product.price * cart.quantity %}
+                    {% set sousTotal = sousTotal + productTotal %}
+                {% endfor %}
+
+                <div class="mbr-col-md-8 mt-4">
+                    <div class="cart-info">
+                        <div class="text-center">
+                            <h1 class="display-5">Total Panier</h1>
+                        </div>
+                        <table class="table table-cart mb-3">
+                            <tr>
+                                <th>SOUS-TOTAL</th>
+                                <td>{{ sousTotal }} €</td>
+                            </tr>
+                            <tr>
+                                <th>EXPEDITION</th>
+                                <td>{{ livraison }} €</td>
+                            </tr>
+                            <tr>
+                                <th>TOTAL</th>
+                                <td>
+                                    {% set total = sousTotal+livraison %}
+                                    {{ total }} €
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td><br></td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td><select name="address">
+                                        {% for address in addresses %}
+                                            <option value="{{ address.id }}">{{ address.nom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="mbr-col-md-4 mt-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentType" id="exampleRadios1" value="1"
+                               checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            CB
+                        </label>
+                    </div>
+                    <div class="form-check mt-3">
+
+                        <div class="mbr-row mt-3">
+                            <div class="mbr-col-md-8">
+                                <input type="text" name="cbNumber" placeholder="Card Number">
+                            </div>
+                            <div class="mbr-col-md-2">
+                                <input type="number" class="cvc" name="cvc" placeholder="CVC">
+                            </div>
+                        </div>
+                        <div class="mbr-row mt-3">
+                            <div class="mbr-col-md-6">
+                                <select name="month">
+                                    <option value="01">Janvier</option>
+                                    <option value="02">Fevrier</option>
+                                    <option value="03">Mars</option>
+                                    <option value="04">Avril</option>
+                                    <option value="05">Mai</option>
+                                    <option value="06">Juin</option>
+                                    <option value="07">Juillet</option>
+                                    <option value="08">Aout</option>
+                                    <option value="09">Septembre</option>
+                                    <option value="10">Octobre</option>
+                                    <option value="11">Novembre</option>
+                                    <option value="12">Décembre</option>
+                                </select>
+                            </div>
+                            <div class="mbr-col-md-6">
+                                <select name="year">
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="radio" name="paymentType" id="exampleRadios2"
+                               value="2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Paypal
+                        </label>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-pink">Valider la commande</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

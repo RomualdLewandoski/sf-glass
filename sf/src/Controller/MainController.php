@@ -8,13 +8,14 @@ use App\Entity\Image;
 use App\Entity\MainConfig;
 use App\Entity\SiteConfig;
 use App\Form\ContactType;
+use App\Repository\CatProductRepository;
 use App\Repository\ContactConfigRepository;
-use App\Repository\ContactRepository;
+use App\Repository\FeaturesRepository;
 use App\Repository\GenderCatRepository;
 use App\Repository\MainConfigRepository;
+use App\Repository\PartnersRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SiteConfigRepository;
-use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,13 +25,22 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main")
      */
-    public function index(Request $request, ProductRepository $productRepository, GenderCatRepository $genderCatRepository, MainConfigRepository $mainConfigRepository, ContactConfigRepository $contactRepository, SiteConfigRepository $siteConfigRepository)
+    public function index(Request $request,
+                          ProductRepository $productRepository,
+                          GenderCatRepository $genderCatRepository,
+                          MainConfigRepository $mainConfigRepository,
+                          ContactConfigRepository $contactRepository,
+                          SiteConfigRepository $siteConfigRepository,
+                          PartnersRepository $partnersRepository,
+                          FeaturesRepository $featuresRepository,
+                          CatProductRepository $catProductRepository
+    )
     {
 
         $mainConfig = $mainConfigRepository->find(1);
         $contactConfig = $contactRepository->find(1);
         $siteConfig = $siteConfigRepository->find(1);
-        if ($mainConfig == null){
+        if ($mainConfig == null) {
             $mainConfig = new MainConfig();
 
             $mainConfig->setHeaderBg(new Image());
@@ -45,10 +55,10 @@ class MainController extends AbstractController
             $mainConfig->setGender2Title("Gender2");
             $mainConfig->setGender2Slug("none");
         }
-        if ($contactConfig == null){
+        if ($contactConfig == null) {
             $contactConfig = new ContactConfig();
         }
-        if($siteConfig == null){
+        if ($siteConfig == null) {
             $siteConfig = new SiteConfig();
             $siteConfig->setHowWorksBg(new Image());
         }
@@ -66,7 +76,7 @@ class MainController extends AbstractController
         }
 
         $sponsoProducts = $productRepository->getSponsoAllGenre();
-        if ($sponsoProducts == null){
+        if ($sponsoProducts == null) {
             $sponsoProducts = $productRepository->getLatest();
         }
 
@@ -74,43 +84,59 @@ class MainController extends AbstractController
             'mainConfig' => $mainConfig,
             'contactConfig' => $contactConfig,
             'siteConfig' => $siteConfig,
+            'partners' => $partnersRepository->findAll(),
+            'features' => $featuresRepository->getLatest(),
             'imgUrl' => 'assets/images/01.jpg',
             'bgMan' => 'assets/images/background2.jpg',
             'bgWoman' => 'assets/images/background1.jpg',
             'sponsoProducts' => $sponsoProducts,
             'genderCat' => $genderCatRepository->findAll(),
-            'contactForm' => $form->createView()
+            'contactForm' => $form->createView(),
+            'productCats' => $catProductRepository->findAll()
         ]);
     }
 
     /**
      * @Route("/gender/{slug}", name="view_gender")
      */
-    public function viewGender(Request $request, ProductRepository $productRepository, GenderCatRepository $genderCatRepository, string $slug, SiteConfigRepository $siteConfigRepository)
-    {
-        $siteConfig = $siteConfigRepository->find(1);
+    public function viewGender(Request $request,
+                               ProductRepository $productRepository,
+                               MainConfigRepository $mainConfigRepository,
+                               GenderCatRepository $genderCatRepository,
+                               string $slug,
+                               SiteConfigRepository $siteConfigRepository,
+                               PartnersRepository $partnersRepository,
+                               CatProductRepository $catProductRepository
 
+    )
+    {
+
+        $siteConfig = $siteConfigRepository->find(1);
+        $mainConfig = $mainConfigRepository->find(1);
         $gender = $genderCatRepository->findOneBy(["slug" => $slug]);
         if ($gender == null) {
             return $this->redirectToRoute("main");
         }
-        if($siteConfig == null){
-            $siteConfig = new SiteConfig();
-            $siteConfig->setHowWorksBg(new Image());
-        }
-        $sponsoProducts = $productRepository->getSponsoByGender($gender->getId());
 
-        if($sponsoProducts == null){
-            $sponsoProducts = $productRepository->getLatestGender($gender->getId());
-        }
+if ($siteConfig == null) {
+    $siteConfig = new SiteConfig();
+    $siteConfig->setHowWorksBg(new Image());
+}
+$sponsoProducts = $productRepository->getSponsoByGender($gender->getId());
 
-        return $this->render('genderView/index.html.twig', [
-            'imgUrl' => 'assets/images/01.jpg',
-            'sponsoProducts' => $sponsoProducts,
-            'genderCat' => $genderCatRepository->findAll(),
-            'siteConfig' => $siteConfig,
-            'headerBg' => $gender->getHeaderBg()
-        ]);
-    }
+if ($sponsoProducts == null) {
+    $sponsoProducts = $productRepository->getLatestGender($gender->getId());
+}
+
+return $this->render('genderView/index.html.twig', [
+    'sponsoProducts' => $sponsoProducts,
+    'mainConfig' => $mainConfig,
+    'partners' => $partnersRepository->findAll(),
+    'genderCat' => $genderCatRepository->findAll(),
+    'siteConfig' => $siteConfig,
+    'headerBg' => $gender->getHeaderBg(),
+    'productCats' => $catProductRepository->findAll()
+]);
+}
 
 }

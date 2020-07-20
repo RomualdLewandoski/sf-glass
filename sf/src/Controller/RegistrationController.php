@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\CatProductRepository;
+use App\Repository\GenderCatRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\AuthAuthenticator;
@@ -30,7 +32,13 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AuthAuthenticator $authenticator, UserRepository $userrepo): Response
+    public function register(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             GuardAuthenticatorHandler $guardHandler,
+                             AuthAuthenticator $authenticator,
+                             UserRepository $userrepo,
+                             GenderCatRepository $genderCatRepository,
+                             CatProductRepository $catProductRepository): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -47,7 +55,7 @@ class RegistrationController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
-                $user->setRoles(["ROLE_ADMIN"]);
+                //$user->setRoles(["ROLE_ADMIN"]);
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
@@ -78,6 +86,8 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'genderCat' => $genderCatRepository->findAll(),
+            'productCats' => $catProductRepository->findAll(),
             'error' => $error
 
         ]);

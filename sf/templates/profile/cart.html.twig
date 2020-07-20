@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container shop-container">
+        <div class="text-center display-5 mt-3">
+            Panier
+        </div>
+        <div class="mbr-row ">
+            <div class="mbr-col-md-8 mt-4">
+                {% set sousTotal = 0 %}
+                <table class="shop_table " cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th class="product-name" colspan="3">Produit</th>
+                        <th class="product-price">Prix</th>
+                        <th class="product-quantity">Quantité</th>
+                        <th class="product-subtotal">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cart in carts %}
+                        <tr class="woocommerce-cart-form__cart-item cart_item bundle_table_item">
+                            <td class="product-remove display-5">
+                                <a href="{{ path('cart_remove', {'id':cart.id}) }}">×</a>
+                            </td>
+
+                            <td class="product-thumbnail">
+
+                                <img width="247" height="247"
+                                     src="{{ vich_uploader_asset(cart.product.image, 'imageFile') }}"
+                                >
+                            </td>
+
+                            <td class="product-name" data-title="Produit">
+                                <a href="{{ path('shop_view', {'id': cart.product.id}) }}">{{ cart.product.name }}</a>
+                            </td>
+
+                            <td class="product-price" data-title="Prix">
+                                <span class="woocommerce-Price-amount amount">{{ cart.product.price }}
+                                    <span class="woocommerce-Price-currencySymbol"> €</span>
+                                </span>
+                            </td>
+
+                            <td class="product-quantity" data-title="Quantité">
+                                <form action="{{ path('cart_update') }}" method="post">
+                                    <input type="hidden" name="productId" value="{{ cart.id }}">
+                                    <div class="handle-counter" id="handleCounter{{ cart.product.id }}">
+                                        <button class="counter-minus btn2 btn2-primary" type="button">-</button>
+                                        <input type="text" id="productQt" name="productQt" value="{{ cart.quantity }}">
+                                        <button class="counter-plus btn2 btn2-primary" type="button">+</button>
+                                        <button class="counter-send btn2 btn2-primary" type="submit">
+                                            <i
+                                                    class="fa fa-refresh"></i></button>
+                                    </div>
+                                </form>
+                                <script src="https://www.jqueryscript.net/demo/jQuery-Plugin-To-Create-Increment-Decrement-Input-Spinners-handleCounter/app/js/handleCounter.js"></script>
+
+                                <script>
+                                    $(function ($) {
+                                        var options = {
+                                            minimum: 1,
+                                            maximize: {{ cart.product.stock }},
+                                        }
+                                        $('#handleCounter{{ cart.product.id }}').handleCounter(options);
+                                    })
+                                </script>
+                            </td>
+
+                            <td class="product-subtotal" data-title="Total">
+                                <span class="woocommerce-Price-amount amount"> {% set productTotal = cart.product.price * cart.quantity %}
+                                    {% set sousTotal = sousTotal + productTotal %}
+                                    {{ productTotal }}<span
+                                            class="woocommerce-Price-currencySymbol"> €</span></span></td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="mbr-col-md-4 mt-4">
+                <div class="cart-info">
+                    <div class="text-center">
+                        <h1 class="display-5">Total Panier</h1>
+                    </div>
+                    <table class="table table-cart mb-3">
+                        <tr>
+                            <th>SOUS-TOTAL</th>
+                            <td>{{ sousTotal }} €</td>
+                        </tr>
+                        <tr>
+                            <th>EXPEDITION</th>
+                            <td>{{ livraison }} €</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL</th>
+                            <td>
+                                {% set total = sousTotal+livraison %}
+                                {{ total }} €
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="text-center">
+                        <a href="{{ path('checkout') }}" class="btn btn-pink">Valider la commande</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

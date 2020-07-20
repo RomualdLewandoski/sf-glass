@@ -5,8 +5,15 @@
 
 
 {% block body %}
+
     {% embed "frontEmbed/header.twig" %}
-        {% block imgUrl %}  {{ vich_uploader_asset(headerBg, 'imageFile') }} {% endblock %}
+        {% block headerTitle %}
+            {{ mainConfig.headerTitle }}
+        {% endblock %}
+        {% block headerSub %}
+            {{ mainConfig.headerSub }}
+        {% endblock %}
+        {% block imgUrl %} {{ vich_uploader_asset(headerBg, 'imageFile') }} {% endblock %}
     {% endembed %}
 
     {% embed "frontEmbed/about.twig" %}

@@ -11,19 +11,24 @@
 
             <div class="line"></div>
 
-            <div class="mbr-col-lg-1 mbr-col-md-3 mbr-col-sm-12">
-                <div class="img-wrapper">
-                    <amp-img src="assets/images/1.png" alt="" width="104.39999999999999" height="87" layout="responsive" class="mobirise-loader mbr-m-auto align-center">
-                        <div placeholder="" class="placeholder">
-                            <div class="mobirise-spinner">
-                                <em></em>
-                                <em></em>
-                                <em></em>
-                            </div></div>
+            {% for partner in partners %}
+                <div class="mbr-col-lg-1 mbr-col-md-3 mbr-col-sm-12">
+                    <div class="img-wrapper">
+                        <amp-img src="{{ vich_uploader_asset(partner.logo, 'imageFile') }}" alt="" width="104.39999999999999" height="87" layout="responsive"
+                                 class="mobirise-loader mbr-m-auto align-center">
+                            <div placeholder="" class="placeholder">
+                                <div class="mobirise-spinner">
+                                    <em></em>
+                                    <em></em>
+                                    <em></em>
+                                </div>
+                            </div>
 
-                    </amp-img>
+                        </amp-img>
+                    </div>
                 </div>
-            </div>
+
+            {% endfor %}
 
 
         </div>

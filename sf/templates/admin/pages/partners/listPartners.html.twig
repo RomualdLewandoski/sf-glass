@@ -1,0 +1,51 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Partenaires
+            <small>Liste des partenaires</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Gestion site</a></li>
+            <li class="active">Liste des partenaires</li>
+        </ol>
+    </section>
+<div class="dashboard1">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a href="{{ path('partners_new') }}" class="btn btn-sm btn-success">Create new</a>
+        </div>
+    </div>
+    <div class="col-md-12 table-responsive">
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partner in partners %}
+            <tr>
+                <td>{{ partner.id }}</td>
+                <td>{{ partner.name }}</td>
+                <td>
+                    <a href="{{ path('partners_show', {'id': partner.id}) }}" class="btn btn-primary btn-sm">show</a>
+                    <a href="{{ path('partners_edit', {'id': partner.id}) }}" class="btn btn-warning btn-sm">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
