@@ -1,0 +1,120 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Liste des commandes</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Commandes</a></li>
+            <li class="active">Gestion</li>
+        </ol>
+    </section>
+
+    <div class="dashboard1">
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <table class="shop_table " cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th class="product-name" colspan="2">Produit</th>
+                        <th class="product-price">Prix</th>
+                        <th class="product-quantity">Quantité</th>
+                        <th class="product-subtotal">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cart in orderProducts %}
+                        <tr class="woocommerce-cart-form__cart-item cart_item bundle_table_item">
+
+                            <td class="product-thumbnail">
+                                <img width="247" height="247"
+                                     src="{{ vich_uploader_asset(cart.product.image, 'imageFile') }}"
+                                >
+                            </td>
+                            <td class="product-name" data-title="Produit">
+                                <a href="{{ path('shop_view', {'id': cart.product.id}) }}">{{ cart.product.name }}</a>
+                            </td>
+
+                            <td class="product-price" data-title="Prix">
+                                <span class="woocommerce-Price-amount amount">{{ cart.price }}
+                                    <span class="woocommerce-Price-currencySymbol"> €</span>
+                                </span>
+                            </td>
+
+                            <td class="product-quantity" data-title="Quantité">
+                                {{ cart.quantity }}
+                            </td>
+
+                            <td class="product-subtotal" data-title="Total">
+                                <span class="woocommerce-Price-amount amount"> {% set productTotal = cart.price * cart.quantity %}
+                                    {{ productTotal }}<span
+                                            class="woocommerce-Price-currencySymbol"> €</span></span></td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-cart mb-3">
+                    <tr>
+                        <th>SOUS-TOTAL</th>
+                        {% set soustotal = order.price - livraison %}
+                        <td>{{ soustotal }} €</td>
+                    </tr>
+                    <tr>
+                        <th>EXPEDITION</th>
+                        <td>{{ livraison }} €</td>
+                    </tr>
+                    <tr>
+                        <th>TOTAL</th>
+                        <td>
+                            {{ order.price }} €
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>STATUS</th>
+                        <td>{% if order.status == 0 %}
+                                En attente depuis le {{ order.date|date("d/m/Y à H:i") }}
+                            {% elseif order.status == 1 %}
+                                En préparation depuis le {{ order.dateUpdate|date("d/m/Y à H:i") }}
+                            {% elseif order.status == 2 %}
+                                En transit depuis le {{ order.dateUpdate|date("d/m/Y à H:i") }}
+                            {% elseif order.status == 3 %}
+                                Terminée depuis le {{ order.dateUpdate|date("d/m/Y à H:i") }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>ADDRESS</th>
+                        <td>{{ order.address.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>MOYEN DE PAYEMENT</th>
+                        <td>
+                            {% if order.paymentType == 1 %}
+                                Carte banquaire
+                            {% elseif order.paymentType == 2 %}
+                                Paypal
+                            {% else %}
+                                Autre moyen de payement
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="col-md-6 text-right ">
+                    <button class="btn btn-lg btn-warning">{{ button_label|default('Update') }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

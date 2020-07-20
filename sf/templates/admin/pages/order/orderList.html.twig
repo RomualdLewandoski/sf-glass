@@ -1,0 +1,55 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block bodyContent %}
+    <section class="content-header">
+        <h1>
+            Gestion Produit
+            <small>Liste des commandes</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">Commandes</a></li>
+            <li class="active">Liste</li>
+        </ol>
+    </section>
+    <div class="dashboard1">
+        <div class="col-md-12 table-responsive">
+            <table class="table mt-4" id="datatable">
+                <thead>
+                <th>Utilisateur</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>Status</th>
+                <th>Actions</th>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr class="{% if order.status == 0 %} bg-warning{% endif %}">
+                        <td>{{ order.user.nom }} {{ order.user.prenom }}</td>
+                        <td>{{ order.date|date("d/m/Y à H:i") }}</td>
+                        <td>{{ order.price }} €</td>
+                        <td>{% if order.status == 0 %}
+                                En attente
+                            {% elseif order.status == 1 %}
+                                En préparation
+                            {% elseif order.status == 2 %}
+                                En transit
+                            {% elseif order.status == 3 %}
+                                Terminée
+                            {% endif %}</td>
+                        <td>
+                            <a href="{{ path('order_manage', {'id':order.id}) }}" class="btn btn-success">Gérer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <script>
+                $(document).ready(function () {
+                    $('#datatable').DataTable();
+                });
+            </script>
+        </div>
+    </div>
+{% endblock %}

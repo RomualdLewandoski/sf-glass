@@ -13,6 +13,7 @@ use App\Repository\AddressRepository;
 use App\Repository\CartRepository;
 use App\Repository\CatProductRepository;
 use App\Repository\GenderCatRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use App\Security\AuthAuthenticator;
@@ -41,6 +42,28 @@ class ProfileController extends AbstractController
             'productCats' => $catProductRepository->findAll(),
             'controller_name' => $user->getUsername(),
             'orders' => $user->getOrders()
+        ]);
+    }
+
+    /**
+     * @Route("/profile/order/{id}", name="view_order")
+     */
+    public function viewOrder(UserRepository $userRepository, GenderCatRepository $genderCatRepository, CatProductRepository $catProductRepository, OrderRepository $orderRepository, int $id)
+    {
+        $userCredential = $this->getUser();
+        $user = $userRepository->findOneBy(['username' => $userCredential->getUsername()]);
+        $order = $orderRepository->find($id);
+        if ($order->getUser() != $user) {
+            return $this->redirectToRoute('profile');
+        }
+        $orderProducts = $order->getOrderProducts();
+        return $this->render('profile/orderInfo.html.twig', [
+            'livraison' => 3.99,
+            'genderCat' => $genderCatRepository->findAll(),
+            'productCats' => $catProductRepository->findAll(),
+            'controller_name' => $user->getUsername(),
+            'order' => $order,
+            'orderProducts' => $orderProducts
         ]);
     }
 

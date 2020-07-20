@@ -42,7 +42,7 @@
                     </thead>
                     {% for order in orders %}
                         <tr>
-                            <td>{{ order.date|date("d/m/yyyy à H:i") }}</td>
+                            <td>{{ order.date|date("d/m/Y à H:i") }}</td>
                             <td>{{ order.price }} €</td>
                             <td>
                                 {% if order.status == 0 %}
@@ -55,7 +55,7 @@
                                     Terminée
                                 {% endif %}
                             </td>
-                            <td><a href="#" class="btn btn-primary btn-sm">Détails </a></td>
+                            <td><a href="{{ path('view_order', {'id': order.id}) }}" class="btn btn-primary btn-sm">Détails </a></td>
                         </tr>
                     {% else %}
                         Vous n'avez aucune commande actuellement

@@ -56,12 +56,13 @@
                             </a>
                         </li>
                         <li class="{% if currentPath == "partners_new" %}active{% endif %}">
-                            <a href="{{ path('partners_new') }}"><i class="fa fa-circle-o"></i> Ajouter un partenaire</a>
+                            <a href="{{ path('partners_new') }}"><i class="fa fa-circle-o"></i> Ajouter un
+                                partenaire</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="treeview {% if currentPath == "features_index" or currentPath == "features_new" or currentPath == "features_show" or currentPath == "features_edit"%}active{% endif %}">
+                <li class="treeview {% if currentPath == "features_index" or currentPath == "features_new" or currentPath == "features_show" or currentPath == "features_edit" %}active{% endif %}">
                     <a href="#">
                         <i class="fa fa-bolt"></i>
                         <span>Features</span>
@@ -143,6 +144,15 @@
                     </ul>
                 </li>
 
+                <li class="header">COMMANDES</li>
+                <li class="{% if currentPath == "order" or currentPath == "order_manage"%} active {% endif %}">
+                    <a href="{{ path('order') }}">
+                        <i class="fa fa-cart-plus"></i>
+                        <span>Liste des commandes</span>
+                        <span id="orderBadge" class="tag tag-pill badge-primary bg-success float-right" style="display: none"></span>
+                    </a>
+
+                </li>
             </ul>
         </div>
     </div>
@@ -150,7 +160,10 @@
 <script>
     $('document').ready(function () {
         getUnread()
+        getOrder()
+        $('#orderBadge').show()
         setInterval(getUnread, 3000)
+        setInterval(getOrder, 3000)
     })
 
     /**
@@ -168,5 +181,11 @@
             }
 
         });
+    }
+
+    function getOrder() {
+        $.get("{{ path('api_pending_order') }}", (data) => {
+            $('#orderBadge').text(data.count)
+        })
     }
 </script>

@@ -7,22 +7,18 @@
         </div>
         <div class="mbr-row ">
             <div class="mbr-col-md-8 mt-4">
-                {% set sousTotal = 0 %}
                 <table class="shop_table " cellspacing="0">
                     <thead>
                     <tr>
-                        <th class="product-name" colspan="3">Produit</th>
+                        <th class="product-name" colspan="2">Produit</th>
                         <th class="product-price">Prix</th>
                         <th class="product-quantity">Quantité</th>
                         <th class="product-subtotal">Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for cart in carts %}
+                    {% for cart in orderProducts %}
                         <tr class="woocommerce-cart-form__cart-item cart_item bundle_table_item">
-                            <td class="product-remove display-5">
-                                <a href="{{ path('cart_remove', {'id':cart.id}) }}">×</a>
-                            </td>
 
                             <td class="product-thumbnail">
 
@@ -36,39 +32,17 @@
                             </td>
 
                             <td class="product-price" data-title="Prix">
-                                <span class="woocommerce-Price-amount amount">{{ cart.product.price }}
+                                <span class="woocommerce-Price-amount amount">{{ cart.price }}
                                     <span class="woocommerce-Price-currencySymbol"> €</span>
                                 </span>
                             </td>
 
                             <td class="product-quantity" data-title="Quantité">
-                                <form action="{{ path('cart_update') }}" method="post">
-                                    <input type="hidden" name="productId" value="{{ cart.id }}">
-                                    <div class="handle-counter" id="handleCounter{{ cart.product.id }}">
-                                        <button class="counter-minus btn2 btn2-primary" type="button">-</button>
-                                        <input type="text" id="productQt" name="productQt" value="{{ cart.quantity }}">
-                                        <button class="counter-plus btn2 btn2-primary" type="button">+</button>
-                                        <button class="counter-send btn2 btn2-primary" type="submit">
-                                            <i
-                                                    class="fa fa-refresh"></i></button>
-                                    </div>
-                                </form>
-                                <script src="https://www.jqueryscript.net/demo/jQuery-Plugin-To-Create-Increment-Decrement-Input-Spinners-handleCounter/app/js/handleCounter.js"></script>
-
-                                <script>
-                                    $(function ($) {
-                                        var options = {
-                                            minimum: 1,
-                                            maximize: {{ cart.product.stock }},
-                                        }
-                                        $('#handleCounter{{ cart.product.id }}').handleCounter(options);
-                                    })
-                                </script>
+                                {{ cart.quantity }}
                             </td>
 
                             <td class="product-subtotal" data-title="Total">
-                                <span class="woocommerce-Price-amount amount"> {% set productTotal = cart.product.price * cart.quantity %}
-                                    {% set sousTotal = sousTotal + productTotal %}
+                                <span class="woocommerce-Price-amount amount"> {% set productTotal = cart.price * cart.quantity %}
                                     {{ productTotal }}<span
                                             class="woocommerce-Price-currencySymbol"> €</span></span></td>
                         </tr>
@@ -80,12 +54,13 @@
             <div class="mbr-col-md-4 mt-4">
                 <div class="cart-info">
                     <div class="text-center">
-                        <h1 class="display-5">Total Panier</h1>
+                        <h1 class="display-5">Facture</h1>
                     </div>
                     <table class="table table-cart mb-3">
                         <tr>
                             <th>SOUS-TOTAL</th>
-                            <td>{{ sousTotal }} €</td>
+                            {% set soustotal = order.price - livraison %}
+                            <td>{{ soustotal }} €</td>
                         </tr>
                         <tr>
                             <th>EXPEDITION</th>
@@ -94,15 +69,41 @@
                         <tr>
                             <th>TOTAL</th>
                             <td>
-                                {% set total = sousTotal+livraison %}
-                                {{ total }} €
+                                {{ order.price }} €
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>STATUS</th>
+                            <td>{% if order.status == 0 %}
+                                    En attente depuis le {{ order.date|date("d/m/Y à H:i") }}
+                                {% elseif order.status == 1 %}
+                                    En préparation depuis le {{ order.dateUpdate|date("d/m/Y à H:i") }}
+                                {% elseif order.status == 2 %}
+                                    En transit depuis le {{ order.dateUpdate|date("d/m/Y à H:i") }}
+                                {% elseif order.status == 3 %}
+                                    Terminée depuis le {{ order.dateUpdate|date("d/m/Y à H:i") }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ADDRESS</th>
+                            <td>{{ order.address.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>MOYEN DE PAYEMENT</th>
+                            <td>
+                                {% if order.paymentType == 1 %}
+                                Carte banquaire
+                                {% elseif order.paymentType == 2 %}
+                                Paypal
+                                {% else %}
+                                Autre moyen de payement
+                                {% endif %}
                             </td>
                         </tr>
                     </table>
                     <div class="text-center">
-                        {% if carts|length > 0%}
-                        <a href="{{ path('checkout') }}" class="btn btn-pink">Valider la commande</a>
-                        {% endif %}
+                        <a href="#" class="btn btn-pink">Imprimer la facture</a>
                     </div>
                 </div>
             </div>
