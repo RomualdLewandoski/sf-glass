@@ -118,25 +118,26 @@ class MainController extends AbstractController
             return $this->redirectToRoute("main");
         }
 
-if ($siteConfig == null) {
-    $siteConfig = new SiteConfig();
-    $siteConfig->setHowWorksBg(new Image());
-}
-$sponsoProducts = $productRepository->getSponsoByGender($gender->getId());
+        if ($siteConfig == null) {
+            $siteConfig = new SiteConfig();
+            $siteConfig->setHowWorksBg(new Image());
+        }
+        $sponsoProducts = $productRepository->getSponsoByGender($gender->getId());
 
-if ($sponsoProducts == null) {
-    $sponsoProducts = $productRepository->getLatestGender($gender->getId());
-}
+        if ($sponsoProducts == null) {
+            $sponsoProducts = $productRepository->getLatestGender($gender->getId());
+        }
 
-return $this->render('genderView/index.html.twig', [
-    'sponsoProducts' => $sponsoProducts,
-    'mainConfig' => $mainConfig,
-    'partners' => $partnersRepository->findAll(),
-    'genderCat' => $genderCatRepository->findAll(),
-    'siteConfig' => $siteConfig,
-    'headerBg' => $gender->getHeaderBg(),
-    'productCats' => $catProductRepository->findAll()
-]);
-}
+        return $this->render('genderView/index.html.twig', [
+            'sponsoProducts' => $sponsoProducts,
+            'mainConfig' => $mainConfig,
+            'partners' => $partnersRepository->findAll(),
+            'genderCat' => $genderCatRepository->findAll(),
+            'siteConfig' => $siteConfig,
+            'headerBg' => $gender->getHeaderBg(),
+            'productCats' => $catProductRepository->findAll()
+        ]);
+    }
+
 
 }

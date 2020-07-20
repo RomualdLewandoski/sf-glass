@@ -17,6 +17,8 @@ use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use App\Security\AuthAuthenticator;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -437,5 +439,39 @@ class ProfileController extends AbstractController
             }
         }
         return new JsonResponse($obj);
+    }
+
+    /**
+     * @Route("/print/facture/{id}", name="facture")
+     */
+    public function adminFacture(UserRepository $userRepository, OrderRepository $orderRepository, int $id){
+        $userCredential = $this->getUser();
+        $user = $userRepository->findOneBy(['username' => $userCredential->getUsername()]);
+        $order = $orderRepository->find($id);
+        if ($order == null) {
+            return $this->redirectToRoute("profile");
+        }
+        if ($order->getUser() != $user){
+            return $this->redirectToRoute("profile");
+        }
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($pdfOptions);
+
+
+        $html = $this->renderView('facture.html.Twig', [
+            'title' => "Facture",
+            'order' => $order,
+            'livraison'=> 3.99,
+            'orderProducts' => $order->getOrderProducts(),
+
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream("facture-".$order->getUser()->getNom()."-".$order->getUser()->getPrenom()."-".$order->getId().".pdf", [
+            "Attachment" => false
+        ]);
     }
 }

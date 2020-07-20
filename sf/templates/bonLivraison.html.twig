@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>livraison </title>
+    <style>
+        .td-25 {
+            width: 25%;
+        }
+
+        .td-50 {
+            width: 50%;
+        }
+
+        .td-75 {
+            width: 75%;
+        }
+
+        .td-100 {
+            width: 100%;
+        }
+
+        p {
+            padding: 10px;
+        }
+
+        .table {
+            width: 100%;
+            padding: 1em;
+            border: 1px solid;
+        }
+
+        .timbre {
+            position: absolute;
+            padding: 5px;
+            top: 0;
+            width: 80px;
+            height: 80px;
+            float: right;
+            border: 1px solid black;
+            background-color: white;
+            z-index: 1000;
+        }
+
+
+        .bg-secondary {
+            background-color: #6c757d !important
+        }
+
+        .container {
+            margin-top: 5em;
+        }
+    </style>
+</head>
+<body>
+<div class="timbre">TIMBRE</div>
+<h4>{{ title }}</h4>
+
+<div class="container">
+
+    <table class="table">
+        <tbody>
+
+        <tr>
+            <td class="td-50">
+                <h3>Destinatire</h3>
+                <p>{{ order.user.nom }} {{ order.user.prenom }}</p>
+                <p>{{ order.address.address }}<br>
+                    {{ order.address.zipCode }} {{ order.address.city }}</p>
+
+            </td>
+            <td class="td-50">
+                <h3>Expéditeur</h3>
+                <p>AmpProduct...</p>
+                <p>804 Sunset St.<br>
+                    Blacksburg, VA 24060</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    Colis n° {{ trackingNumber }}
+    <br> <br>
+    {{ bar|raw }}
+</div>
+</body>
+</html>

@@ -1,41 +1,91 @@
-{% extends 'baseAdmin.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>livraison </title>
+    <style>
+        .td-25 {
+            width: 25%;
+        }
 
-{% block bodyContent %}
-    <section class="content-header">
-        <h1>
-            Gestion Produit
-            <small>Liste des commandes</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{{ path('admin') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
-            <li><a href="#">Commandes</a></li>
-            <li class="active">Gestion</li>
-        </ol>
-    </section>
+        .td-50 {
+            width: 50%;
+        }
 
-    <div class="dashboard1">
-        <div class="row mt-4">
-            <div class="col-md-8">
-                <table class="shop_table " cellspacing="0">
+        .td-75 {
+            width: 75%;
+        }
+
+        .td-100 {
+            width: 100%;
+        }
+
+        p {
+            padding: 10px;
+        }
+
+        .table {
+            width: 100%;
+            padding: 1em;
+            border: 1px solid;
+        }
+
+        .timbre {
+            position: absolute;
+            padding: 5px;
+            top: 0;
+            width: 80px;
+            height: 80px;
+            float: right;
+            border: 1px solid black;
+            background-color: white;
+            z-index: 1000;
+        }
+
+
+        .bg-secondary {
+            background-color: #6c757d !important
+        }
+
+        td{
+            vertical-align: top;
+        }
+        .container {
+            margin-top: 5em;
+        }
+    </style>
+</head>
+<body>
+<h4>{{ title }} n° {{ order.id }}</h4>
+<h6>Date du {{ order.date|date('d/m/Y H:i') }}</h6>
+<h5>{{ order.user.nom }} {{ order.user.prenom }}</h5>
+<h5>Tel: {{ order.user.telFixe }}/{{ order.user.telMobile }}</h5>
+<h5>Mail: {{ order.user.email }}</h5>
+
+<h5>{{ order.address.address }}<br>{{ order.address.zipCode }} {{ order.address.city }}</h5>
+
+<div class="container">
+
+    <table class="table">
+        <tbody>
+
+        <tr>
+            <td class="td-50">
+                <h3>Détails de la commande</h3>
+                <table class="table">
                     <thead>
                     <tr>
-                        <th class="product-name" colspan="2">Produit</th>
-                        <th class="product-price">Prix</th>
-                        <th class="product-quantity">Quantité</th>
-                        <th class="product-subtotal">Total</th>
+                        <th>Produit</th>
+                        <th>PU</th>
+                        <th>Qté</th>
+                        <th>Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for cart in orderProducts %}
-                        <tr class="woocommerce-cart-form__cart-item cart_item bundle_table_item">
-
-                            <td class="product-thumbnail">
-                                <img width="247" height="247"
-                                     src="{{ vich_uploader_asset(cart.product.image, 'imageFile') }}"
-                                >
-                            </td>
+                        <tr class="">
                             <td class="product-name" data-title="Produit">
-                                <a href="{{ path('shop_view', {'id': cart.product.id}) }}">{{ cart.product.name }}</a>
+                                {{ cart.product.name }}
                             </td>
 
                             <td class="product-price" data-title="Prix">
@@ -54,11 +104,11 @@
                                             class="woocommerce-Price-currencySymbol"> €</span></span></td>
                         </tr>
                     {% endfor %}
-
                     </tbody>
                 </table>
-            </div>
-            <div class="col-md-4">
+            </td>
+            <td class="td-50">
+                <h3>Total</h3>
                 <table class="table table-cart mb-3">
                     <tr>
                         <th>SOUS-TOTAL</th>
@@ -105,20 +155,11 @@
                         </td>
                     </tr>
                 </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <div class="col-md-6 text-right ">
-                    <button class="btn btn-lg btn-warning">{{ button_label|default('Update') }}</button>
-                    {{ form_end(form) }}
-                </div>
-            </div>
-            <div class="text-center">
-                <a href="{{ path('print_send', {'id':order.id}) }}" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Imprimer l'etiquette d'envoi</a>
-                <a href="{{ path('admin_facture', {'id':order.id}) }}" class="btn btn-warning" target="_blank"><i class="fa fa-print"></i> Imprimer la facture</a>
-            </div>
-        </div>
-    </div>
-
-{% endblock %}
-
+</div>
+</body>
+</html>
